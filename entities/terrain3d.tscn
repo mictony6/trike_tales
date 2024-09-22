@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://braquselokbwt"]
+
+[ext_resource type="Terrain3DStorage" uid="uid://de244d4mu5t7p" path="res://terrain/terrain_3d_storage.res" id="1_81g3l"]
+[ext_resource type="Terrain3DMaterial" uid="uid://bep14xafgh0h0" path="res://terrain/new_terrain_3d_material.tres" id="2_x4y5w"]
+[ext_resource type="Terrain3DAssets" uid="uid://cbe00s6uuhqlq" path="res://terrain/new_terrain_3d_assets.tres" id="3_n8ibp"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Terrain3D" type="Terrain3D" parent="."]
+storage = ExtResource("1_81g3l")
+material = ExtResource("2_x4y5w")
+assets = ExtResource("3_n8ibp")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 296.215, 0, -433.894)

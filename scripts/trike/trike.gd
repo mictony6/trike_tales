@@ -59,10 +59,10 @@ func _on_driving_state_processing(delta: float) -> void:
 
 
 func _on_vacant_state_processing(delta: float) -> void:
-	# back_left_wheel.brake = 250
-	# back_right_wheel.brake = 250
+	back_left_wheel.brake = 250
+	back_right_wheel.brake = 250
 
-	brake = 100
+	# brake = 100
 	if control_ui.visible and Input.is_action_just_pressed("interact"):
 		driver.enter_vehicle(player_target, rotation_degrees.y, camera_target)
 		state_chart.send_event("driving")

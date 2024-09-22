@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_38p2m"]
 [ext_resource type="PackedScene" uid="uid://d2l2ofcwd3dfe" path="res://entities/Pivot.tscn" id="5_gjyss"]
 [ext_resource type="Script" path="res://scripts/PlayerAnimations.gd" id="7_i53gn"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_6jani"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_oq8ui"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_qma8e"]
 [ext_resource type="Script" path="res://scripts/terrain_checker.gd" id="11_av7cv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="11_d53iw"]
 
@@ -89,103 +89,94 @@ nodes/output/position = Vector2(1160, 160)
 node_connections = [&"OneShot", 0, &"Transition", &"OneShot", 1, &"Animation 5", &"TimeScale", 0, &"Animation", &"Transition", 0, &"TimeScale", &"Transition", 1, &"Animation 2", &"Transition", 2, &"Animation 3", &"Transition", 3, &"Animation 4", &"output", 0, &"OneShot"]
 
 [node name="Player" instance=ExtResource("2_uhibh")]
+collision_layer = 2
+floor_max_angle = 1.0472
 script = ExtResource("1_gwt2r")
 
 [node name="Armature" parent="." index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/position = Vector3(-3.9591e-15, 0.766455, -0.0381256)
+bones/0/position = Vector3(-6.00787e-15, 0.765334, -0.0381256)
 bones/0/rotation = Quaternion(0.160989, 1.17952e-07, 1.924e-08, 0.986956)
 bones/1/rotation = Quaternion(-0.0538832, 1.2263e-10, -1.28859e-08, 0.998547)
-bones/2/rotation = Quaternion(-0.195024, 0.00251375, 0.000434424, 0.980795)
-bones/3/rotation = Quaternion(-0.00621729, 0.00719894, 0.000841778, 0.999954)
-bones/4/rotation = Quaternion(0.493261, -0.00459436, 0.0016204, 0.869868)
+bones/2/rotation = Quaternion(-0.195028, 0.000768548, 0.000132824, 0.980797)
+bones/3/rotation = Quaternion(-0.00621963, 0.00219617, 0.000256787, 0.999978)
+bones/4/rotation = Quaternion(0.493267, -0.00140158, 0.000494336, 0.869877)
 bones/5/rotation = Quaternion(-0.222539, 1.25407e-07, 5.50072e-09, 0.974924)
 bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(-0.195432, -0.00478959, 0.000891449, 0.980705)
-bones/7/rotation = Quaternion(-0.577783, -0.312793, -0.364769, 0.659751)
-bones/8/rotation = Quaternion(-0.515229, 0.466934, -0.256792, 0.671245)
+bones/6/rotation = Quaternion(-0.195434, -0.00146122, 0.000271937, 0.980716)
+bones/7/rotation = Quaternion(-0.578149, -0.312995, -0.364596, 0.659431)
+bones/8/rotation = Quaternion(-0.513558, 0.465743, -0.271617, 0.667507)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/position = Vector3(-1.95121e-08, 0.0970115, -1.39593e-08)
-bones/9/rotation = Quaternion(3.83489e-08, 0.0662706, 5.03151e-08, 0.997802)
+bones/9/rotation = Quaternion(3.75655e-08, 0.0670341, 7.68511e-08, 0.997751)
 bones/10/position = Vector3(6.83677e-08, 0.0970114, 3.27273e-08)
-bones/10/rotation = Quaternion(0.147107, 0.0662728, -0.24087, 0.957052)
+bones/10/rotation = Quaternion(0.155066, 0.0670364, -0.241102, 0.955683)
 bones/11/position = Vector3(-1.55751e-08, 0.10908, 2.57433e-08)
-bones/11/rotation = Quaternion(-4.47569e-09, 0.0517367, -7.9232e-08, 0.998661)
+bones/11/rotation = Quaternion(6.67659e-08, 0.0294346, -3.76337e-08, 0.999567)
 bones/12/position = Vector3(-9.64339e-09, 0.10908, 1.82615e-09)
-bones/12/rotation = Quaternion(-0.0627483, 0.0511537, -0.0430786, 0.995786)
+bones/12/rotation = Quaternion(-0.0555234, 0.0288501, -0.0478746, 0.996892)
 bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(-0.5775, 0.312637, 0.364903, 0.659998)
-bones/14/rotation = Quaternion(-0.528178, -0.469289, 0.214413, 0.674406)
+bones/13/rotation = Quaternion(-0.577127, 0.31243, 0.36508, 0.660325)
+bones/14/rotation = Quaternion(-0.52832, -0.469983, 0.20181, 0.677692)
 bones/14/scale = Vector3(1, 1, 1)
-bones/15/position = Vector3(-2.23778e-08, 0.0966024, -1.98047e-08)
-bones/15/rotation = Quaternion(4.29103e-08, -0.0621036, -2.17933e-07, 0.99807)
-bones/16/position = Vector3(4.96909e-08, 0.0966022, 1.57892e-08)
-bones/16/rotation = Quaternion(0.130993, -0.0621131, 0.221041, 0.964429)
-bones/17/position = Vector3(1.88246e-08, 0.108644, -3.03303e-08)
-bones/17/rotation = Quaternion(5.56133e-08, -0.0831533, -5.68223e-10, 0.996537)
-bones/18/position = Vector3(-2.86856e-08, 0.108644, 4.12074e-08)
-bones/18/rotation = Quaternion(-0.0823067, -0.0825801, 0.0431163, 0.992243)
+bones/15/position = Vector3(-1.93984e-08, 0.0965621, -1.94967e-08)
+bones/15/rotation = Quaternion(4.81436e-08, -0.0606144, -1.39639e-07, 0.998161)
+bones/16/position = Vector3(4.59437e-08, 0.096562, 1.50554e-08)
+bones/16/rotation = Quaternion(0.122121, -0.0606152, 0.217276, 0.966542)
+bones/17/position = Vector3(1.88558e-08, 0.108607, -2.86676e-08)
+bones/17/rotation = Quaternion(-2.49386e-09, -0.100504, -1.5695e-10, 0.994937)
+bones/18/position = Vector3(-2.57194e-08, 0.108608, 4.34961e-08)
+bones/18/rotation = Quaternion(-0.101016, -0.0989296, 0.044565, 0.98895)
 bones/18/scale = Vector3(1, 1, 1)
 bones/19/rotation = Quaternion(-8.37082e-08, 0.656385, 0.754426, -1.81131e-08)
 bones/20/rotation = Quaternion(3.11396e-08, 0.656385, 0.754426, 7.9358e-08)
-bones/21/scale = Vector3(1, 1, 1)
-bones/22/rotation = Quaternion(-0.452595, -0.462287, 0.762484, 0.00819899)
+bones/22/rotation = Quaternion(-0.450759, -0.457058, 0.766614, 0.014766)
 bones/22/scale = Vector3(1, 1, 1)
-bones/23/position = Vector3(-1.63283e-09, 0.197154, 3.92731e-10)
-bones/23/rotation = Quaternion(-1.10258e-08, -0.000694186, 2.70665e-08, 1)
-bones/24/position = Vector3(-1.34687e-09, 0.197155, -4.07111e-09)
-bones/24/rotation = Quaternion(0.0381136, -0.000734471, 2.77263e-05, 0.999273)
-bones/25/position = Vector3(-1.14324e-08, 0.183616, -8.96626e-09)
-bones/25/rotation = Quaternion(-4.84776e-08, 0.0074381, 6.8363e-09, 0.999972)
-bones/26/position = Vector3(7.03626e-09, 0.183616, 6.84436e-09)
-bones/26/rotation = Quaternion(-0.561166, 0.104797, 0.0434065, 0.819894)
+bones/23/position = Vector3(-4.50936e-09, 0.19699, 2.08591e-09)
+bones/23/rotation = Quaternion(-7.51713e-09, -0.000619802, 2.44046e-08, 1)
+bones/24/position = Vector3(7.4281e-11, 0.19699, -2.95243e-09)
+bones/24/rotation = Quaternion(0.0500499, -0.000704605, 3.50273e-05, 0.998747)
+bones/25/position = Vector3(-1.12361e-08, 0.183451, -1.069e-08)
+bones/25/rotation = Quaternion(-4.66604e-08, 0.00752024, 8.91327e-09, 0.999972)
+bones/26/position = Vector3(7.5541e-09, 0.183451, 8.30398e-09)
+bones/26/rotation = Quaternion(-0.58898, 0.103698, 0.0454482, 0.800178)
 bones/26/scale = Vector3(1, 1, 1)
 bones/27/position = Vector3(1.02286e-09, 0.072908, 2.83153e-08)
-bones/27/rotation = Quaternion(4.37472e-05, 0.991918, -0.126879, -6.3762e-06)
+bones/27/rotation = Quaternion(4.3645e-05, 0.991919, -0.126877, -6.36249e-06)
 bones/28/rotation = Quaternion(-0.174379, 0.780098, 0.32054, 0.508226)
 bones/28/scale = Vector3(1, 1, 1)
-bones/29/rotation = Quaternion(0.448044, -0.601762, 0.657032, 0.0738055)
+bones/29/rotation = Quaternion(0.448622, -0.609806, 0.648112, 0.0826197)
 bones/29/scale = Vector3(1, 1, 1)
-bones/30/position = Vector3(1.1711e-08, 0.193079, 1.2544e-08)
-bones/30/rotation = Quaternion(-6.91317e-09, 0.00300709, -5.39519e-09, 0.999995)
-bones/31/position = Vector3(-9.27129e-09, 0.193079, 4.98843e-08)
-bones/31/rotation = Quaternion(0.446076, 0.00307481, -0.00153481, 0.894989)
+bones/30/position = Vector3(9.53105e-09, 0.193297, 1.49575e-08)
+bones/30/rotation = Quaternion(6.58016e-08, 0.00347422, -3.35358e-09, 0.999994)
+bones/31/position = Vector3(-8.04265e-09, 0.193297, 5.00586e-08)
+bones/31/rotation = Quaternion(0.445204, 0.00351971, -0.00174851, 0.895421)
 bones/31/scale = Vector3(1, 1, 1)
-bones/32/position = Vector3(-1.15527e-08, 0.179894, 1.36381e-09)
-bones/32/rotation = Quaternion(4.15629e-08, -0.0112544, -6.81696e-10, 0.999937)
-bones/33/position = Vector3(-7.38333e-09, 0.179894, 6.11227e-09)
-bones/33/rotation = Quaternion(-0.517313, -0.110212, 0.0165926, 0.848508)
+bones/32/position = Vector3(-9.19385e-09, 0.180042, 4.89815e-09)
+bones/32/rotation = Quaternion(4.21882e-08, -0.0114275, -3.98894e-09, 0.999935)
+bones/33/position = Vector3(-7.88893e-09, 0.180042, 5.54726e-09)
+bones/33/rotation = Quaternion(-0.53267, -0.110296, 0.0147385, 0.838976)
 bones/33/scale = Vector3(1, 1, 1)
 bones/34/position = Vector3(-6.08609e-09, 0.0728509, 2.48515e-09)
-bones/34/rotation = Quaternion(6.00042e-06, 0.992067, -0.125707, 3.65696e-08)
+bones/34/rotation = Quaternion(7.2055e-06, 0.992071, -0.125678, -1.00528e-07)
 bones/34/scale = Vector3(1, 1, 1)
 
 [node name="Collider" type="CollisionShape3D" parent="." index="2"]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.46583e-10, 0.822029, -0.0392129)
 shape = SubResource("CapsuleShape3D_ygxgn")
 
-[node name="StateChartDebugger" parent="." index="3" instance=ExtResource("8_6jani")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_bottom = 0.0
-offset_left = -301.0
-offset_bottom = 593.0
-grow_horizontal = 0
-grow_vertical = 1
-size_flags_horizontal = 0
-initial_node_to_watch = NodePath("../StateChart")
-
-[node name="Pivot" parent="." index="4" node_paths=PackedStringArray("subject") instance=ExtResource("5_gjyss")]
+[node name="Pivot" parent="." index="3" node_paths=PackedStringArray("subject") instance=ExtResource("5_gjyss")]
 spring_length = 5.0
 subject = NodePath("..")
 
 [node name="Camera3D" parent="Pivot" index="0"]
 fov = 60.0
 
-[node name="StateChart" type="Node" parent="." index="5"]
+[node name="StateChart" type="Node" parent="." index="4"]
 script = ExtResource("2_ktoio")
+track_in_editor = true
 
 [node name="Root" type="Node" parent="StateChart" index="0"]
 script = ExtResource("4_38p2m")
@@ -203,6 +194,12 @@ to = NodePath("../../Walk")
 event = &"walk"
 delay_in_seconds = "0.0"
 
+[node name="ToJump" type="Node" parent="StateChart/Root/Movement/Idle" index="1"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Jump")
+event = &"jump"
+delay_in_seconds = "0.0"
+
 [node name="Walk" type="Node" parent="StateChart/Root/Movement" index="1"]
 script = ExtResource("4_0u3os")
 
@@ -210,6 +207,18 @@ script = ExtResource("4_0u3os")
 script = ExtResource("10_oq8ui")
 to = NodePath("../../Sprint")
 event = &"sprint"
+delay_in_seconds = "0.0"
+
+[node name="ToJump" type="Node" parent="StateChart/Root/Movement/Walk" index="1"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Jump")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="ToIdle" type="Node" parent="StateChart/Root/Movement/Walk" index="2"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Idle")
+event = &"idle"
 delay_in_seconds = "0.0"
 
 [node name="Jump" type="Node" parent="StateChart/Root/Movement" index="2"]
@@ -221,6 +230,12 @@ to = NodePath("../../HistoryState")
 event = &"last_state"
 delay_in_seconds = "0.0"
 
+[node name="ToIdle" type="Node" parent="StateChart/Root/Movement/Jump" index="1"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
 [node name="Sprint" type="Node" parent="StateChart/Root/Movement" index="3"]
 script = ExtResource("4_0u3os")
 
@@ -228,6 +243,18 @@ script = ExtResource("4_0u3os")
 script = ExtResource("10_oq8ui")
 to = NodePath("../../Walk")
 event = &"walk"
+delay_in_seconds = "0.0"
+
+[node name="ToJump" type="Node" parent="StateChart/Root/Movement/Sprint" index="1"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Jump")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="ToIdle" type="Node" parent="StateChart/Root/Movement/Sprint" index="2"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../Idle")
+event = &"idle"
 delay_in_seconds = "0.0"
 
 [node name="Driving" type="Node" parent="StateChart/Root/Movement" index="4"]
@@ -243,19 +270,7 @@ delay_in_seconds = "0.0"
 script = ExtResource("11_d53iw")
 default_state = NodePath("../Idle")
 
-[node name="ToIdle" type="Node" parent="StateChart/Root/Movement" index="6"]
-script = ExtResource("10_oq8ui")
-to = NodePath("../Idle")
-event = &"idle"
-delay_in_seconds = "0.0"
-
-[node name="ToJump" type="Node" parent="StateChart/Root/Movement" index="7"]
-script = ExtResource("10_oq8ui")
-to = NodePath("../Jump")
-event = &"jump"
-delay_in_seconds = "0.0"
-
-[node name="ToDriving" type="Node" parent="StateChart/Root/Movement" index="8"]
+[node name="ToDriving" type="Node" parent="StateChart/Root/Movement" index="6"]
 script = ExtResource("10_oq8ui")
 to = NodePath("../Driving")
 event = &"driving"
@@ -293,8 +308,9 @@ to = NodePath("../Vehicle")
 event = &"terrain_vehicle"
 delay_in_seconds = "0.0"
 
-[node name="TerrainChecker" type="Area3D" parent="." index="6" node_paths=PackedStringArray("state_chart")]
+[node name="TerrainChecker" type="Area3D" parent="." index="5" node_paths=PackedStringArray("state_chart")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 0
 monitorable = false
 script = ExtResource("11_av7cv")
 state_chart = NodePath("../StateChart")
@@ -303,7 +319,7 @@ state_chart = NodePath("../StateChart")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.598165, 0)
 shape = SubResource("SphereShape3D_cwnvv")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="7"]
+[node name="AnimationTree" type="AnimationTree" parent="." index="6"]
 tree_root = SubResource("AnimationNodeBlendTree_kqb0i")
 anim_player = NodePath("../AnimationPlayer")
 parameters/OneShot/active = false
@@ -314,6 +330,12 @@ parameters/Transition/current_state = "walk"
 parameters/Transition/transition_request = ""
 parameters/Transition/current_index = 0
 script = ExtResource("7_i53gn")
+
+[node name="StateChartDebugger" parent="." index="7" instance=ExtResource("10_qma8e")]
+offset_left = 852.0
+offset_bottom = -406.0
+enabled = false
+initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="state_entered" from="StateChart/Root/Movement/Idle" to="AnimationTree" method="_on_idle_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_physics_processing"]

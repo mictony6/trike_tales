@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b74qqqtqpywtj"]
+
+[ext_resource type="PackedScene" uid="uid://dw2hkj4cut0v0" path="res://imports/blade.glb" id="1_i8l56"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abhsh"]
+albedo_color = Color(0.721368, 0.867069, 0.475195, 1)
+
+[node name="blade" instance=ExtResource("1_i8l56")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_abhsh")

@@ -27,7 +27,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		state_chart.send_event("jump")
 
-	move_and_slide()
 
 func get_input_direction():
 	# Get the input direction and handle the movement/deceleration.
@@ -43,16 +42,18 @@ func get_input_direction():
 func _on_walk_state_physics_processing(delta: float):
 	#rotate the player to the velocity direction
 	if is_on_floor():
-		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * 20)
 		if !direction:
 			state_chart.send_event("idle")
+			return
+		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * 20)
 			
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
 
 	if (Input.is_action_pressed("sprint")):
 		state_chart.send_event("sprint")
-
+	move_and_slide()
+	
 
 func _on_idle_state_physics_processing(delta: float):
 	if direction:
@@ -60,27 +61,31 @@ func _on_idle_state_physics_processing(delta: float):
 	else:
 		velocity.x = move_toward(velocity.x, Vector3.ZERO.x, delta * 20)
 		velocity.z = move_toward(velocity.z, Vector3.ZERO.z, delta * 20)
+	move_and_slide()
+	
 
 func _on_sprint_state_physics_processing(delta: float):
 	#rotate the player to the velocity direction
 	if is_on_floor():
-		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * 20)
 		if !direction:
 			state_chart.send_event("idle")
+			return
+		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * 20)
 	
 	velocity.x = direction.x * RUNNING_SPEED
 	velocity.z = direction.z * RUNNING_SPEED
 
 	if Input.is_action_just_released("sprint"):
 		state_chart.send_event("walk")
-
+	move_and_slide()
+	
 
 var last_state_before_jump = null
 func _on_jump_state_physics_processing(delta: float) -> void:
 	if is_on_floor():
 		state_chart.send_event("last_state")
+	move_and_slide()
 	
-
 func _on_jump_state_entered() -> void:
 	velocity.y = JUMP_VELOCITY
 
