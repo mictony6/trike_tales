@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://d4fdw56uo8ol6"]
+
+[ext_resource type="Script" path="res://scripts/Sun.gd" id="1_p2ffh"]
+[ext_resource type="PackedScene" uid="uid://dtsxnn02yq3bu" path="res://entities/Player.tscn" id="2_baem0"]
+[ext_resource type="PackedScene" uid="uid://clxc7ikwiatiy" path="res://entities/Trike.tscn" id="3_7pfvq"]
+[ext_resource type="Texture2D" uid="uid://08caflxqefav" path="res://GreyboxTextures/greybox_blue_grid.png" id="4_txqn3"]
+[ext_resource type="Texture2D" uid="uid://ca3bsnmmgk62u" path="res://GreyboxTextures/greybox_dark_grid.png" id="5_lbchs"]
+[ext_resource type="PackedScene" uid="uid://crsnxn5db5vxb" path="res://entities/Terrain.tscn" id="6_cg8mr"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_bltjy"]
+
+[sub_resource type="Sky" id="Sky_6l53t"]
+sky_material = SubResource("PhysicalSkyMaterial_bltjy")
+
+[sub_resource type="Environment" id="Environment_5c2jx"]
+background_mode = 2
+sky = SubResource("Sky_6l53t")
+tonemap_mode = 2
+tonemap_white = 16.0
+fog_sun_scatter = 1.0
+fog_density = 0.005
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evt4m"]
+albedo_texture = ExtResource("4_txqn3")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c10si"]
+albedo_texture = ExtResource("5_lbchs")
+uv1_triplanar = true
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 23.0824, 0)
+shadow_enabled = true
+script = ExtResource("1_p2ffh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5c2jx")
+
+[node name="Player2" parent="." instance=ExtResource("2_baem0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.281352, 0)
+collision_layer = 2
+
+[node name="Trike" parent="." instance=ExtResource("3_7pfvq")]
+transform = Transform3D(-0.996865, 0, -0.0791202, 0, 1, 0, 0.0791202, 0, -0.996865, -2.90841, 0.7, 2.8773)
+
+[node name="GridMap" type="GridMap" parent="."]
+
+[node name="Map" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -130)
+
+[node name="sidewalk" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.75, 22.4126)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(45, 1, 45)
+
+[node name="sidewalk2" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5, 0, -17)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(48, 1, 11)
+
+[node name="sidewalk4" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5, 1, -44.5)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(48, 3, 20)
+
+[node name="sidewalk5" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -44.5)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(44, 3, 20)
+
+[node name="sidewalk6" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 1, -75.5)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(16, 3, 26)
+
+[node name="sidewalk7" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.5, 1, -76.5)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(72, 3, 28)
+
+[node name="sidewalk3" type="CSGBox3D" parent="Map/sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5, 0, 10.5)
+material_override = SubResource("StandardMaterial3D_evt4m")
+use_collision = true
+size = Vector3(48, 1, 34)
+
+[node name="Node3D" type="Node3D" parent="Map"]
+
+[node name="Road" type="CSGBox3D" parent="Map/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.85, 22.5)
+material_override = SubResource("StandardMaterial3D_c10si")
+use_collision = true
+size = Vector3(100, 4.2, 55)
+
+[node name="River" type="CSGBox3D" parent="Map/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999985, -5.85, -10.5)
+material_override = SubResource("StandardMaterial3D_c10si")
+use_collision = true
+size = Vector3(109, 4.2, 21)
+
+[node name="Road2" type="CSGBox3D" parent="Map/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, -38.5)
+material_override = SubResource("StandardMaterial3D_c10si")
+use_collision = true
+size = Vector3(100, 4.5, 55)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map"]
+transform = Transform3D(0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 0, 0, 1, 2.08447, 0.222628, 5.4)
+use_collision = true
+size = Vector3(1.19966, 1.82715, 11)
+
+[node name="Terrain" parent="." instance=ExtResource("6_cg8mr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.40738, 0)

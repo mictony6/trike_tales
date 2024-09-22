@@ -1,0 +1,202 @@
+[gd_scene load_steps=18 format=3 uid="uid://clxc7ikwiatiy"]
+
+[ext_resource type="Script" path="res://scripts/trike/trike.gd" id="1_1yqg8"]
+[ext_resource type="PackedScene" uid="uid://deb5t8xjwasfy" path="res://imports/Trike/TRIKE.glb" id="2_iffh3"]
+[ext_resource type="ArrayMesh" uid="uid://deg2pgjibwj3l" path="res://mesh/wheel.res" id="2_r88yf"]
+[ext_resource type="Texture2D" uid="uid://baba13jymqbdm" path="res://ui/keyboard_e_outline.png" id="4_eofh5"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_pigpw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="6_c1yqn"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="7_j444g"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_tbpxv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_36bwy"]
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wilrj"]
+size = Vector3(1.94192, 1.84786, 2.13354)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dtmun"]
+size = Vector3(0.352001, 1.64141, 0.690489)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3cvgw"]
+height = 0.177046
+radius = 0.368647
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gh8ql"]
+size = Vector3(1.79724, 0.76155, 0.110049)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2mshf"]
+size = Vector3(0.482791, 1.16711, 0.436544)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vchfl"]
+size = Vector3(1.28027, 2.11914, 2.99036)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gj7qa"]
+blend_mode = 3
+light_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28biq"]
+bg_color = Color(0.344076, 0.344076, 0.344076, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[node name="Trike" type="VehicleBody3D" node_paths=PackedStringArray("control_ui") groups=["Vehicle"]]
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_36bwy")
+center_of_mass_mode = 1
+script = ExtResource("1_1yqg8")
+control_ui = NodePath("ControlUI")
+max_torque = 4000
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.294342, 1.05194, 0.0969376)
+shape = SubResource("BoxShape3D_wilrj")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.166958, -0.985964, 0, 0.985964, 0.166958, 1.04294, 0.638963, -0.0877514)
+shape = SubResource("BoxShape3D_dtmun")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 1.03281, 0.355069, 1.06961)
+shape = SubResource("CylinderShape3D_3cvgw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.145289, -0.98939, 0, 0.98939, 0.145289, -0.262622, 0.494706, -0.981824)
+shape = SubResource("BoxShape3D_gh8ql")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.27392, 1.45553, -0.436294)
+shape = SubResource("BoxShape3D_gh8ql")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.17365, 0.669439, -0.841394)
+shape = SubResource("BoxShape3D_2mshf")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.63843, 0.631478, -0.846348)
+shape = SubResource("BoxShape3D_2mshf")
+
+[node name="TRIKE" parent="." instance=ExtResource("2_iffh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0769806, 0, -0.147876)
+
+[node name="Plane_008" parent="TRIKE" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.450667, 0, 0)
+
+[node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03353, 0.359512, 1.07002)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFrontLeft"]
+mesh = ExtResource("2_r88yf")
+skeleton = NodePath("../..")
+
+[node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.26812, 0.36, 1.07013)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.4
+
+[node name="WheelBackLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.034, 0.36, -0.595)
+use_as_traction = true
+wheel_radius = 0.4
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WheelBackLeft"]
+mesh = ExtResource("2_r88yf")
+skeleton = NodePath("../..")
+
+[node name="WheelBackRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.268, 0.36, -0.595)
+use_as_traction = true
+wheel_radius = 0.4
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WheelBackRight"]
+mesh = ExtResource("2_r88yf")
+skeleton = NodePath("../..")
+
+[node name="PlayerDetector" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34937, 1.00293, 0.145569)
+shape = SubResource("BoxShape3D_vchfl")
+
+[node name="ControlUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -536.0
+offset_top = -224.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="ControlUI"]
+material = SubResource("CanvasItemMaterial_gj7qa")
+clip_contents = true
+layout_mode = 0
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 134.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_28biq")
+
+[node name="AspectRatioContainer" type="HBoxContainer" parent="ControlUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="ControlUI/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("4_eofh5")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="ControlUI/AspectRatioContainer"]
+layout_mode = 2
+text = "Control"
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("5_pigpw")
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("6_c1yqn")
+initial_state = NodePath("Vacant")
+
+[node name="Vacant" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("7_j444g")
+
+[node name="ToDriving" type="Node" parent="StateChart/CompoundState/Vacant"]
+script = ExtResource("8_tbpxv")
+to = NodePath("../../Driving")
+event = &"driving"
+delay_in_seconds = "0.0"
+
+[node name="Driving" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("7_j444g")
+
+[node name="ToVacant" type="Node" parent="StateChart/CompoundState/Driving"]
+script = ExtResource("8_tbpxv")
+to = NodePath("../../Vacant")
+event = &"vacant"
+delay_in_seconds = "0.0"
+
+[node name="PlayerMountTarget" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.49348, 0, -0.161685)
+
+[node name="CameraTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.29905, 0)
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
+[connection signal="state_processing" from="StateChart/CompoundState/Vacant" to="." method="_on_vacant_state_processing"]
+[connection signal="state_processing" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_processing"]
+
+[editable path="TRIKE"]

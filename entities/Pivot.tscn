@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2l2ofcwd3dfe"]
+
+[ext_resource type="Script" path="res://scripts/Pivot.gd" id="1_lkupa"]
+
+[node name="Pivot" type="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41257, -0.139973)
+spring_length = 10.0
+margin = 0.2
+script = ExtResource("1_lkupa")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+fov = 50.0
