@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://g1nrbjc3o0xq"]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_np2hg"]
+[ext_resource type="Script" path="res://scripts/bt/Nodes/sequence.gd" id="2_rlpr8"]
+[ext_resource type="Script" path="res://scripts/bt/Nodes/random_selector.gd" id="3_4ir0p"]
+[ext_resource type="Script" path="res://scripts/bt/Nodes/leaf.gd" id="3_5cl3d"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nb11q"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ereoj"]
+
+[node name="NPC" type="CharacterBody3D" node_paths=PackedStringArray("behavior_tree")]
+script = ExtResource("1_np2hg")
+behavior_tree = NodePath("Sequence")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_nb11q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ereoj")
+skeleton = NodePath("../..")
+
+[node name="Sequence" type="Node" parent="."]
+script = ExtResource("2_rlpr8")
+
+[node name="RandomSelector" type="Node" parent="Sequence"]
+script = ExtResource("3_4ir0p")
+
+[node name="MoveLeft" type="Node" parent="Sequence/RandomSelector"]
+script = ExtResource("3_5cl3d")
+
+[node name="MoveRight" type="Node" parent="Sequence/RandomSelector"]
+script = ExtResource("3_5cl3d")
+
+[node name="Jump" type="Node" parent="Sequence"]
+script = ExtResource("3_5cl3d")
+
+[node name="Land" type="Node" parent="Sequence"]
+script = ExtResource("3_5cl3d")
+
+[connection signal="on_run" from="Sequence/RandomSelector/MoveLeft" to="." method="_on_move_left_on_run"]
+[connection signal="on_run" from="Sequence/RandomSelector/MoveRight" to="." method="_on_move_right_on_run"]
+[connection signal="on_run" from="Sequence/Jump" to="." method="_on_jump_on_run"]
+[connection signal="on_run" from="Sequence/Land" to="." method="_on_land_on_run"]

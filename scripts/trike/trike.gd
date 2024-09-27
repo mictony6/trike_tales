@@ -38,7 +38,8 @@ func _on_player_detector_body_exited(body: Node3D) -> void:
 
 
 func _on_driving_state_processing(delta: float) -> void:
-	brake = 0
+	back_left_wheel.brake = 100
+	back_right_wheel.brake = 100
 	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 10)
 	steering = clampf(steering, -max_steering, max_steering)
 	var acceleration = Input.get_axis("backward", "forward") * max_torque
