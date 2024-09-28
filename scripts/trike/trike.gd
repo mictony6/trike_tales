@@ -10,6 +10,10 @@ class_name Trike
 var max_steering = 0.5
 @export var max_torque: int
 var limit = 6
+var engine_status = false
+
+
+var available_seats = 1
 
 
 @onready var back_left_wheel: VehicleWheel3D = $WheelBackLeft
@@ -36,15 +40,20 @@ func _on_player_detector_body_entered(body: Node3D) -> void:
 func _on_player_detector_body_exited(body: Node3D) -> void:
 	control_ui.visible = false
 
-
 func _on_driving_state_processing(delta: float) -> void:
-	back_left_wheel.brake = 100
-	back_right_wheel.brake = 100
+
+
+	# get the steering input
 	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 10)
 	steering = clampf(steering, -max_steering, max_steering)
-	var acceleration = Input.get_axis("backward", "forward") * max_torque
+	var acceleration = 1 if Input.get_axis("backward", "forward") >= 0 else -1
+	
+	# stop the vehicle
+	if Input.is_action_just_pressed("brake"):
+		engine_status = !engine_status
+		
 
-	engine_force = acceleration
+	engine_force = acceleration * max_torque if engine_status else 0
 	# linear_velocity = linear_velocity.normalized() * min(linear_velocity.length(), 53)
 	var hvelocity = Vector2(linear_velocity.x, linear_velocity.z)
 	if hvelocity.length() > limit:
@@ -60,6 +69,8 @@ func _on_driving_state_processing(delta: float) -> void:
 
 
 func _on_vacant_state_processing(delta: float) -> void:
+	engine_status = false
+	
 	back_left_wheel.brake = 250
 	back_right_wheel.brake = 250
 

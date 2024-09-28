@@ -1,18 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://g1nrbjc3o0xq"]
+[gd_scene load_steps=9 format=3 uid="uid://g1nrbjc3o0xq"]
 
 [ext_resource type="Script" path="res://scripts/npc.gd" id="1_np2hg"]
+[ext_resource type="Script" path="res://scripts/bt/Nodes/selector.gd" id="2_fcv6i"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/sequence.gd" id="2_rlpr8"]
-[ext_resource type="Script" path="res://scripts/bt/Nodes/random_selector.gd" id="3_4ir0p"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/leaf.gd" id="3_5cl3d"]
+[ext_resource type="Script" path="res://scripts/npc_black_board.gd" id="5_y4t8g"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nb11q"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ereoj"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_5nick"]
+radius = 10.0
+
 [node name="NPC" type="CharacterBody3D" node_paths=PackedStringArray("behavior_tree")]
+collision_layer = 8
 script = ExtResource("1_np2hg")
-behavior_tree = NodePath("Sequence")
+behavior_tree = NodePath("Selector")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_nb11q")
@@ -21,25 +26,37 @@ shape = SubResource("ConvexPolygonShape3D_nb11q")
 mesh = SubResource("BoxMesh_ereoj")
 skeleton = NodePath("../..")
 
-[node name="Sequence" type="Node" parent="."]
+[node name="Selector" type="Node" parent="."]
+script = ExtResource("2_fcv6i")
+
+[node name="SeqWaitForTricycle" type="Node" parent="Selector"]
 script = ExtResource("2_rlpr8")
 
-[node name="RandomSelector" type="Node" parent="Sequence"]
-script = ExtResource("3_4ir0p")
-
-[node name="MoveLeft" type="Node" parent="Sequence/RandomSelector"]
+[node name="IsNotNearTrike" type="Node" parent="Selector/SeqWaitForTricycle"]
 script = ExtResource("3_5cl3d")
 
-[node name="MoveRight" type="Node" parent="Sequence/RandomSelector"]
-script = ExtResource("3_5cl3d")
+[node name="SeqSignalToTricycle" type="Node" parent="Selector"]
+script = ExtResource("2_rlpr8")
 
-[node name="Jump" type="Node" parent="Sequence"]
-script = ExtResource("3_5cl3d")
+[node name="SeqBoardTricycle" type="Node" parent="Selector"]
+script = ExtResource("2_rlpr8")
 
-[node name="Land" type="Node" parent="Sequence"]
-script = ExtResource("3_5cl3d")
+[node name="SeqSelectDestination" type="Node" parent="Selector"]
+script = ExtResource("2_rlpr8")
 
-[connection signal="on_run" from="Sequence/RandomSelector/MoveLeft" to="." method="_on_move_left_on_run"]
-[connection signal="on_run" from="Sequence/RandomSelector/MoveRight" to="." method="_on_move_right_on_run"]
-[connection signal="on_run" from="Sequence/Jump" to="." method="_on_jump_on_run"]
-[connection signal="on_run" from="Sequence/Land" to="." method="_on_land_on_run"]
+[node name="SeqRideTricycle" type="Node" parent="Selector"]
+script = ExtResource("2_rlpr8")
+
+[node name="SeqExitTricycle" type="Node" parent="Selector"]
+script = ExtResource("2_rlpr8")
+
+[node name="BlackBoard" type="Node" parent="."]
+script = ExtResource("5_y4t8g")
+
+[node name="TrikeDetector" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrikeDetector"]
+shape = SubResource("SphereShape3D_5nick")

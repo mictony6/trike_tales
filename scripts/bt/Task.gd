@@ -16,7 +16,7 @@ var guard = null
 var status = FRESH
 var is_entry = false
 
-
+# self 
 func running():
     status = RUNNING
     if control:
@@ -41,6 +41,7 @@ func cancel():
 func run():
     pass
 
+#children 
 func child_success():
     pass
 

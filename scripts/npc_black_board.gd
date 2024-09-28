@@ -1,0 +1,14 @@
+extends Node
+class_name BlackBoard
+
+var trike_near = false
+
+func _on_trike_detector_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Vehicle"):
+		body = body as Trike
+		trike_near = true
+
+
+func _on_trike_detector_body_exited(body: Node3D) -> void:
+	if body.is_in_group("Vehicle"):
+		trike_near = false
