@@ -40,33 +40,6 @@ func _on_player_detector_body_entered(body: Node3D) -> void:
 func _on_player_detector_body_exited(body: Node3D) -> void:
 	control_ui.visible = false
 
-func _on_driving_state_processing(delta: float) -> void:
-
-
-	# get the steering input
-	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 10)
-	steering = clampf(steering, -max_steering, max_steering)
-	var acceleration = 1 if Input.get_axis("backward", "forward") >= 0 else -1
-	
-	# stop the vehicle
-	if Input.is_action_just_pressed("brake"):
-		engine_status = !engine_status
-		
-
-	engine_force = acceleration * max_torque if engine_status else 0
-	# linear_velocity = linear_velocity.normalized() * min(linear_velocity.length(), 53)
-	var hvelocity = Vector2(linear_velocity.x, linear_velocity.z)
-	if hvelocity.length() > limit:
-		hvelocity = hvelocity.normalized() * limit
-		linear_velocity.x = hvelocity.x
-		linear_velocity.z = hvelocity.y
-
-	if Input.is_action_just_pressed("interact"):
-		driver.exit_vehicle()
-		state_chart.send_event("vacant")
-		player_detector.monitoring = true
-		stop_vehicle()
-
 
 func _on_vacant_state_processing(delta: float) -> void:
 	engine_status = false
@@ -85,3 +58,34 @@ func _on_vacant_state_processing(delta: float) -> void:
 func stop_vehicle() -> void:
 	steering = 0
 	engine_force = 0
+
+
+var acceleration = 1
+func _on_driving_state_processing(delta: float) -> void:
+	acceleration = 1 if Input.get_axis("backward", "forward") >= 0 else -1
+
+
+	# stop the vehicle
+	if Input.is_action_just_pressed("brake"):
+		engine_status = !engine_status
+
+
+	if Input.is_action_just_pressed("interact"):
+		driver.exit_vehicle()
+		state_chart.send_event("vacant")
+		player_detector.monitoring = true
+		stop_vehicle()
+
+		
+func _on_driving_state_physics_processing(delta: float) -> void:
+	# get the steering input
+	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 10)
+	steering = clampf(steering, -max_steering, max_steering)
+
+	engine_force = acceleration * max_torque if engine_status else 0
+	# linear_velocity = linear_velocity.normalized() * min(linear_velocity.length(), 53)
+	var hvelocity = Vector2(linear_velocity.x, linear_velocity.z)
+	if hvelocity.length() > limit:
+		hvelocity = hvelocity.normalized() * limit
+		linear_velocity.x = hvelocity.x
+		linear_velocity.z = hvelocity.y

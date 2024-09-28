@@ -40,10 +40,12 @@ corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
 [node name="Trike" type="VehicleBody3D" node_paths=PackedStringArray("control_ui") groups=["Vehicle"]]
+collision_layer = 4
+collision_mask = 9
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_36bwy")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0, 0.1)
+center_of_mass = Vector3(0, 0.1, 0.1)
 script = ExtResource("1_1yqg8")
 control_ui = NodePath("ControlUI")
 max_torque = 4000
@@ -189,6 +191,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.29905, 0)
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
 [connection signal="state_processing" from="StateChart/CompoundState/Vacant" to="." method="_on_vacant_state_processing"]
+[connection signal="state_physics_processing" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_physics_processing"]
 [connection signal="state_processing" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_processing"]
 
 [editable path="TRIKE"]

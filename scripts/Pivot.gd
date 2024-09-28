@@ -2,10 +2,16 @@ extends SpringArm3D
 
 @onready var camera: Camera3D = $Camera3D
 @export var subject: Node3D
+var driving_subject: Node3D
 @onready var player: Node3D = get_parent()
 var offset: Vector3 = Vector3.ZERO
 
 const MOUSE_SENSITIVITY = 0.25
+
+var normal_spring_length = 5.0
+var driving_spring_length = 10.0
+
+var is_driving = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	offset = global_transform.origin - subject.global_position
@@ -38,11 +44,22 @@ func _process(delta):
 	global_transform.origin.x = target_position.x
 	global_transform.origin.z = target_position.z
 	global_transform.origin.y = lerp(global_position.y, target_position.y, 2 * delta)
-
-func set_subject(obj: Node3D) -> void:
-	print(obj)
-	subject = obj
 	
+	# make the spring length change based on distance of player to subject
+	var distance = subject.global_position.distance_to(player.global_position)
+	if is_driving:
+		spring_length = driving_spring_length + distance
+		
+	else:
+		spring_length = normal_spring_length + distance
+
+func enter_vehicle(target_pos: Node3D):
+	is_driving = true
+	subject.subject = target_pos
+
+func exit_vehicle():
+	is_driving = false
+	subject.subject = player
 
 func lerp_spring_length(target_length: float, duration: float) -> void:
 	var initial_length = spring_length

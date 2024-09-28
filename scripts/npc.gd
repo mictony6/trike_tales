@@ -36,3 +36,15 @@ func _on_is_not_near_trike_on_run(action: Leaf) -> void:
 		action.fail()
 	else:
 		action.success()
+
+
+func _on_jump_on_run(action: Leaf) -> void:
+	velocity.y = JUMP_VELOCITY
+	action.success()
+
+
+func _on_land_on_run(action: Leaf) -> void:
+	if is_on_floor():
+		action.success()
+	else:
+		action.running()

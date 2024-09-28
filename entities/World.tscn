@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://d4fdw56uo8ol6"]
+[gd_scene load_steps=16 format=3 uid="uid://d4fdw56uo8ol6"]
 
 [ext_resource type="Script" path="res://scripts/Sun.gd" id="1_p2ffh"]
 [ext_resource type="PackedScene" uid="uid://dtsxnn02yq3bu" path="res://entities/Player.tscn" id="2_baem0"]
 [ext_resource type="PackedScene" uid="uid://clxc7ikwiatiy" path="res://entities/Trike.tscn" id="3_7pfvq"]
+[ext_resource type="PackedScene" uid="uid://d2l2ofcwd3dfe" path="res://entities/Pivot.tscn" id="4_4n7jt"]
+[ext_resource type="Script" path="res://scripts/camera_target.gd" id="5_lmyck"]
 [ext_resource type="PackedScene" uid="uid://g1nrbjc3o0xq" path="res://entities/npc.tscn" id="5_nojq7"]
 [ext_resource type="PackedScene" uid="uid://braquselokbwt" path="res://entities/terrain3d.tscn" id="6_rn6re"]
 
@@ -26,6 +28,9 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0075
 volumetric_fog_albedo = Color(0.441699, 0.68477, 0.827625, 1)
 volumetric_fog_ambient_inject = 1.15
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i2uqy"]
+radius = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v06kr"]
 albedo_color = Color(0.934198, 0.919054, 0.897854, 1)
@@ -54,6 +59,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.947815, 0, -1.72046)
 
 [node name="Player2" parent="." instance=ExtResource("2_baem0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 478.467, 1.42205, -511.934)
+
+[node name="CameraTarget" type="Node3D" parent="Player2"]
+script = ExtResource("5_lmyck")
+
+[node name="Pivot" parent="Player2" node_paths=PackedStringArray("subject") instance=ExtResource("4_4n7jt")]
+subject = NodePath("../CameraTarget")
+
+[node name="TargetDetect" type="Area3D" parent="Player2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.59692)
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player2/TargetDetect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.437073)
+shape = SubResource("SphereShape3D_i2uqy")
 
 [node name="Trike" parent="." instance=ExtResource("3_7pfvq")]
 transform = Transform3D(-0.996865, 0, -0.0791202, 0, 1, 0, 0.0791202, 0, -0.996865, 470.009, 1.42205, -511.934)
@@ -252,3 +272,9 @@ material = SubResource("StandardMaterial3D_56b5m")
 
 [node name="NPC" parent="." instance=ExtResource("5_nojq7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 454.337, 2.2567, -512.973)
+
+[node name="NPC2" parent="." instance=ExtResource("5_nojq7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 454.219, 2.2567, -509.251)
+
+[connection signal="body_entered" from="Player2/TargetDetect" to="Player2/CameraTarget" method="_on_target_detect_body_entered"]
+[connection signal="body_exited" from="Player2/TargetDetect" to="Player2/CameraTarget" method="_on_target_detect_body_exited"]

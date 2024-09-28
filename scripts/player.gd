@@ -4,7 +4,7 @@ class_name Player
 @onready var pivot: SpringArm3D = $Pivot
 @onready var state_chart: StateChart = $StateChart
 
-@onready var collider = $Collider
+@onready var body_collider = $Collider
 const MOUSE_SENSITIVITY = 0.005
 const SPEED = 2.0
 const RUNNING_SPEED = SPEED * 2
@@ -23,9 +23,9 @@ func _physics_process(delta):
 		
 	get_input_direction()
 
-
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		state_chart.send_event("jump")
+	move_and_slide()
 
 
 func get_input_direction():
@@ -37,7 +37,6 @@ func get_input_direction():
 
 	# rotate player to the camera direction
 	direction = move_direction.rotated(Vector3.UP, pivot.rotation.y).normalized()
-	move_and_slide()
 
 
 func _on_walk_state_physics_processing(delta: float):
@@ -90,19 +89,19 @@ func _on_jump_state_entered() -> void:
 var mount_position: Node3D = null
 
 func enter_vehicle(target_pos: Node3D, vehicle_rotation_y: float, camera_target: Node3D) -> void:
-	collider.disabled = true
+	body_collider.disabled = true
 	mount_position = target_pos
 	# move player to target position
 	global_position = target_pos.global_position
 	# rotate player to the vehicle direction
 	rotation.y = vehicle_rotation_y
-
 	state_chart.send_event("driving")
-	pivot.set_subject(camera_target)
+	pivot.enter_vehicle(camera_target)
 	await pivot.lerp_spring_length(10, 0.5)
 
 
 func _on_driving_state_physics_processing(delta: float) -> void:
+	velocity = Vector3.ZERO
 
 	# make the player follow the vehicle
 	global_position = mount_position.global_position
@@ -110,9 +109,9 @@ func _on_driving_state_physics_processing(delta: float) -> void:
 	rotation = mount_position.global_rotation
 
 func exit_vehicle():
-	collider.disabled = false
+	body_collider.disabled = false
 	state_chart.send_event("last_state")
 	rotation_degrees.x = 0
 	rotation_degrees.z = 0
-	pivot.set_subject(self)
+	pivot.exit_vehicle()
 	await pivot.lerp_spring_length(5, 0.5)

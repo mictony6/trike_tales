@@ -4,7 +4,7 @@
 
 [node name="Pivot" type="SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41257, -0.139973)
-spring_length = 10.0
+spring_length = 5.0
 margin = 0.2
 script = ExtResource("1_lkupa")
 
