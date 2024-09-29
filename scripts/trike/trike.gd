@@ -70,7 +70,7 @@ func _on_driving_state_processing(delta: float) -> void:
 		engine_status = !engine_status
 
 
-	if Input.is_action_just_pressed("interact"):
+	if Input.is_action_just_pressed("exit"):
 		driver.exit_vehicle()
 		state_chart.send_event("vacant")
 		player_detector.monitoring = true
@@ -79,13 +79,15 @@ func _on_driving_state_processing(delta: float) -> void:
 		
 func _on_driving_state_physics_processing(delta: float) -> void:
 	# get the steering input
-	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 10)
+	steering = move_toward(steering, Input.get_axis("right", "left"), delta * 5)
 	steering = clampf(steering, -max_steering, max_steering)
 
 	engine_force = acceleration * max_torque if engine_status else 0
+	#if steering != 0:
+		#engine_force*=0.1
 	# linear_velocity = linear_velocity.normalized() * min(linear_velocity.length(), 53)
 	var hvelocity = Vector2(linear_velocity.x, linear_velocity.z)
-	if hvelocity.length() > limit:
+	if hvelocity.length() > limit :
 		hvelocity = hvelocity.normalized() * limit
 		linear_velocity.x = hvelocity.x
 		linear_velocity.z = hvelocity.y

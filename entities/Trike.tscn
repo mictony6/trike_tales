@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://clxc7ikwiatiy"]
+[gd_scene load_steps=20 format=3 uid="uid://clxc7ikwiatiy"]
 
 [ext_resource type="Script" path="res://scripts/trike/trike.gd" id="1_1yqg8"]
 [ext_resource type="PackedScene" uid="uid://deb5t8xjwasfy" path="res://imports/Trike/TRIKE.glb" id="2_iffh3"]
@@ -13,7 +13,7 @@
 rough = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wilrj"]
-size = Vector3(2.27509, 1.83714, 2.13354)
+size = Vector3(2.29928, 1.83714, 2.13354)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pd4c5"]
 size = Vector3(2.27509, 0.641627, 0.248428)
@@ -24,6 +24,24 @@ size = Vector3(0.758032, 1.85977, 0.690489)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3cvgw"]
 height = 0.177046
 radius = 0.368647
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ymrlt"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fnwry"]
+width = 1024
+height = 1024
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_ymrlt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5k4s"]
+albedo_color = Color(0.499179, 0.633409, 0.52639, 1)
+metallic = 1.0
+roughness = 0.5
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_fnwry")
+uv1_scale = Vector3(5, 5, 5)
+uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vchfl"]
 size = Vector3(1.28027, 2.11914, 2.99036)
@@ -51,7 +69,7 @@ control_ui = NodePath("ControlUI")
 max_torque = 4000
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.232547, 1.05194, 0.0915766)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00446327, 1.05194, 0.0915766)
 shape = SubResource("BoxShape3D_wilrj")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
@@ -71,6 +89,7 @@ disabled = true
 
 [node name="Plane_008" parent="TRIKE" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412544, 0, -0.166789)
+surface_material_override/0 = SubResource("StandardMaterial3D_y5k4s")
 
 [node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.151, 0.36, 1.07)
@@ -186,7 +205,7 @@ delay_in_seconds = "0.0"
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.61646, 0, -0.186962)
 
 [node name="CameraTarget" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.29905, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29905, 0)
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]

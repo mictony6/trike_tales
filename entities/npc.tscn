@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://g1nrbjc3o0xq"]
+[gd_scene load_steps=11 format=3 uid="uid://g1nrbjc3o0xq"]
 
-[ext_resource type="Script" path="res://scripts/npc.gd" id="1_np2hg"]
+[ext_resource type="Script" path="res://scripts/npc_behavior.gd" id="1_np2hg"]
+[ext_resource type="Resource" uid="uid://yy6f6cppqoei" path="res://dialogue/EasyPassenger01.dialogue" id="2_0lxdx"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/selector.gd" id="2_fcv6i"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/sequence.gd" id="2_rlpr8"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/leaf.gd" id="3_5cl3d"]
 [ext_resource type="Script" path="res://scripts/npc_black_board.gd" id="5_y4t8g"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1b3n"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5tf3"]
 albedo_color = Color(0.853594, 0.48995, 0.435363, 1)
 roughness = 0.8
 emission = Color(0.419813, 0.419813, 0.419813, 1)
@@ -16,7 +17,7 @@ rim_tint = 0.89
 backlight = Color(0.401393, 0.567479, 0.88277, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_7ixyy"]
-material = SubResource("StandardMaterial3D_e1b3n")
+material = SubResource("StandardMaterial3D_x5tf3")
 top_radius = 0.15
 bottom_radius = 0.25
 height = 1.56
@@ -32,6 +33,7 @@ radius = 10.0
 collision_layer = 8
 script = ExtResource("1_np2hg")
 behavior_tree = NodePath("Selector")
+dialogue = ExtResource("2_0lxdx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -70,19 +72,6 @@ monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrikeDetector"]
 shape = SubResource("SphereShape3D_5nick")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-clip_contents = true
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-expand_mode = 5
-
-[node name="Label" type="Label" parent="HBoxContainer"]
-layout_mode = 2
 
 [connection signal="on_run" from="Selector/SeqWaitForTrike/IsNotNearTrike" to="." method="_on_is_not_near_trike_on_run"]
 [connection signal="on_run" from="Selector/SeqSignalTrike/Jump" to="." method="_on_jump_on_run"]

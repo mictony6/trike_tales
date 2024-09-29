@@ -1,17 +1,21 @@
 extends CharacterBody3D
+class_name NPCInstance
+
+@export var behavior_tree: Task = null
+@export var dialogue : DialogueResource
+@onready var blackboard: BlackBoard = $BlackBoard
+var has_quest : bool = true
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
-@export var behavior_tree: Task = null
 var direction = Vector3.ZERO
 var previous_pos = Vector3.ZERO
-
-@onready var blackboard: BlackBoard = $BlackBoard
 
 
 func _ready() -> void:
 	behavior_tree.start()
 	previous_pos = global_transform.origin
+	
 
 func _process(delta: float) -> void:
 	behavior_tree.run()
@@ -48,3 +52,6 @@ func _on_land_on_run(action: Leaf) -> void:
 		action.success()
 	else:
 		action.running()
+
+func on_reached_destination() -> void:
+	print("NPC has reached the destination")

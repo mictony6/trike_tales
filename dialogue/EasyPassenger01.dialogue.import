@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://yy6f6cppqoei"
+path="res://.godot/imported/EasyPassenger01.dialogue-2669e2095e8e5639839afa3443e51ed4.tres"
+
+[deps]
+
+source_file="res://dialogue/EasyPassenger01.dialogue"
+dest_files=["res://.godot/imported/EasyPassenger01.dialogue-2669e2095e8e5639839afa3443e51ed4.tres"]
+
+[params]
+
+defaults=true

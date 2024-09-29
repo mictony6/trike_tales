@@ -35,9 +35,6 @@ storage = ExtResource("1_81g3l")
 material = ExtResource("2_x4y5w")
 assets = ExtResource("3_n8ibp")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 296.215, 0, -433.894)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 114.797, -11.3139, -524)
 mesh = SubResource("PlaneMesh_btfun")

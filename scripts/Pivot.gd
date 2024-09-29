@@ -1,4 +1,5 @@
 extends SpringArm3D
+class_name Pivot
 
 @onready var camera: Camera3D = $Camera3D
 @export var subject: Node3D
@@ -14,8 +15,7 @@ var driving_spring_length = 10.0
 var is_driving = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	offset = global_transform.origin - subject.global_position
-
+	offset = global_transform.origin - player.global_position
 	top_level = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -27,13 +27,6 @@ func _unhandled_input(event):
 		rotation_degrees.y -= (event.relative.x * MOUSE_SENSITIVITY)
 		rotation_degrees.y = wrapf(rotation_degrees.y, 0.0, 360.0)
 
-	#switch mouse mode when pressing ESC
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			else:
-				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _process(delta):
 			
@@ -45,21 +38,13 @@ func _process(delta):
 	global_transform.origin.z = target_position.z
 	global_transform.origin.y = lerp(global_position.y, target_position.y, 2 * delta)
 	
-	# make the spring length change based on distance of player to subject
-	var distance = subject.global_position.distance_to(player.global_position)
-	if is_driving:
-		spring_length = driving_spring_length + distance
-		
-	else:
-		spring_length = normal_spring_length + distance
-
 func enter_vehicle(target_pos: Node3D):
 	is_driving = true
-	subject.subject = target_pos
+	subject = target_pos
 
 func exit_vehicle():
 	is_driving = false
-	subject.subject = player
+	subject = player
 
 func lerp_spring_length(target_length: float, duration: float) -> void:
 	var initial_length = spring_length
@@ -73,3 +58,9 @@ func lerp_spring_length(target_length: float, duration: float) -> void:
 
 	# Ensure the final value is set
 	spring_length = target_length
+
+func set_length_to_driving():
+	await lerp_spring_length(driving_spring_length, 0.5)
+	
+func set_length_to_normal():
+	await lerp_spring_length(normal_spring_length,0.5)

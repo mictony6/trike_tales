@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Player
 
-@onready var pivot: SpringArm3D = $Pivot
+@onready var pivot: Pivot = $Pivot
 @onready var state_chart: StateChart = $StateChart
 
 @onready var body_collider = $Collider
@@ -13,7 +13,8 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var direction: Vector3 = Vector3.ZERO
 
-
+func _ready() -> void:
+	Globals.player = self
 func _physics_process(delta):
 	state_chart.set_expression_property("is_on_floor", is_on_floor())
 	
@@ -97,7 +98,7 @@ func enter_vehicle(target_pos: Node3D, vehicle_rotation_y: float, camera_target:
 	rotation.y = vehicle_rotation_y
 	state_chart.send_event("driving")
 	pivot.enter_vehicle(camera_target)
-	await pivot.lerp_spring_length(10, 0.5)
+	pivot.set_length_to_driving()
 
 
 func _on_driving_state_physics_processing(delta: float) -> void:
@@ -114,4 +115,13 @@ func exit_vehicle():
 	rotation_degrees.x = 0
 	rotation_degrees.z = 0
 	pivot.exit_vehicle()
-	await pivot.lerp_spring_length(5, 0.5)
+	pivot.set_length_to_normal()
+
+
+func _on_in_dialogue_state_physics_processing(delta: float) -> void:
+	velocity = Vector3.ZERO
+	var interact_location : Vector3 = state_chart.get_expression_property("interact_location")
+	var direction_to_npc : Vector3 = (interact_location-global_position).normalized()
+	var target_angle: float = atan2(-direction_to_npc.x, -direction_to_npc.z)
+	rotation.y = lerp_angle(rotation.y, target_angle, delta * 10)
+	#look_at(state_chart.get_expression_property("interact_location"), Vector3.UP)

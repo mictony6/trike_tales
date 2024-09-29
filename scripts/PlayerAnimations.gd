@@ -25,3 +25,7 @@ func _on_jump_state_exited() -> void:
 
 func _on_driving_state_entered() -> void:
 	set("parameters/Transition/transition_request", "mount")
+
+
+func _on_in_dialogue_state_entered() -> void:
+	set("parameters/Transition/transition_request", "idle")

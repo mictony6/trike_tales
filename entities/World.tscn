@@ -1,36 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4fdw56uo8ol6"]
+[gd_scene load_steps=15 format=3 uid="uid://d4fdw56uo8ol6"]
 
 [ext_resource type="Script" path="res://scripts/Sun.gd" id="1_p2ffh"]
 [ext_resource type="PackedScene" uid="uid://dtsxnn02yq3bu" path="res://entities/Player.tscn" id="2_baem0"]
 [ext_resource type="PackedScene" uid="uid://clxc7ikwiatiy" path="res://entities/Trike.tscn" id="3_7pfvq"]
 [ext_resource type="PackedScene" uid="uid://d2l2ofcwd3dfe" path="res://entities/Pivot.tscn" id="4_4n7jt"]
-[ext_resource type="Script" path="res://scripts/camera_target.gd" id="5_lmyck"]
 [ext_resource type="PackedScene" uid="uid://g1nrbjc3o0xq" path="res://entities/npc.tscn" id="5_nojq7"]
 [ext_resource type="PackedScene" uid="uid://braquselokbwt" path="res://entities/terrain3d.tscn" id="6_rn6re"]
-
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_bltjy"]
-
-[sub_resource type="Sky" id="Sky_6l53t"]
-sky_material = SubResource("PhysicalSkyMaterial_bltjy")
-
-[sub_resource type="Environment" id="Environment_5c2jx"]
-background_mode = 2
-sky = SubResource("Sky_6l53t")
-tonemap_mode = 2
-tonemap_white = 16.0
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.615697, 0.696876, 0.753347, 1)
-fog_sun_scatter = 0.13
-fog_density = 0.0574
-fog_sky_affect = 0.302
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0075
-volumetric_fog_albedo = Color(0.441699, 0.68477, 0.827625, 1)
-volumetric_fog_ambient_inject = 1.15
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_i2uqy"]
-radius = 4.0
+[ext_resource type="PackedScene" uid="uid://cqiphatenrxp3" path="res://entities/destination_post.tscn" id="8_db6ch"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v06kr"]
 albedo_color = Color(0.934198, 0.919054, 0.897854, 1)
@@ -44,39 +20,34 @@ albedo_color = Color(0.252028, 0.252028, 0.252028, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56b5m"]
 albedo_color = Color(0.252028, 0.252028, 0.252028, 1)
 
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_3aicq"]
+
+[sub_resource type="Sky" id="Sky_6l53t"]
+sky_material = SubResource("PhysicalSkyMaterial_3aicq")
+
+[sub_resource type="Environment" id="Environment_5c2jx"]
+background_mode = 2
+sky = SubResource("Sky_6l53t")
+tonemap_mode = 2
+tonemap_white = 16.0
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.32027, 0.482434, 0.607001, 1)
+fog_sun_scatter = 0.19
+fog_density = 0.0934
+fog_sky_affect = 0.5
+fog_depth_curve = 2.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.266468, 0.390617, 0.451525, 1)
+volumetric_fog_ambient_inject = 1.0
+volumetric_fog_sky_affect = 0.5
+
 [node name="World" type="Node3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0174524, 0.999848, 0, -0.999848, 0.0174524, 0, 23.0824, 0)
-shadow_enabled = true
-script = ExtResource("1_p2ffh")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5c2jx")
-
-[node name="Node3D" parent="." instance=ExtResource("6_rn6re")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.947815, 0, -1.72046)
-
-[node name="Player2" parent="." instance=ExtResource("2_baem0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 478.467, 1.42205, -511.934)
-
-[node name="CameraTarget" type="Node3D" parent="Player2"]
-script = ExtResource("5_lmyck")
-
-[node name="Pivot" parent="Player2" node_paths=PackedStringArray("subject") instance=ExtResource("4_4n7jt")]
-subject = NodePath("../CameraTarget")
-
-[node name="TargetDetect" type="Area3D" parent="Player2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.59692)
-collision_layer = 16
-collision_mask = 8
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player2/TargetDetect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.437073)
-shape = SubResource("SphereShape3D_i2uqy")
-
-[node name="Trike" parent="." instance=ExtResource("3_7pfvq")]
-transform = Transform3D(-0.996865, 0, -0.0791202, 0, 1, 0, 0.0791202, 0, -0.996865, 470.009, 1.42205, -511.934)
 
 [node name="Greybox" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 512, 0, -512)
@@ -270,11 +241,30 @@ use_collision = true
 size = Vector3(122.347, 2, 10)
 material = SubResource("StandardMaterial3D_56b5m")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 23.0824, 0)
+shadow_enabled = true
+script = ExtResource("1_p2ffh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5c2jx")
+
+[node name="Terrain" parent="." instance=ExtResource("6_rn6re")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.947815, 0, -1.72046)
+
+[node name="Player" parent="." instance=ExtResource("2_baem0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 478.467, 1.42205, -511.934)
+collision_mask = 13
+
+[node name="Pivot" parent="Player" node_paths=PackedStringArray("subject") instance=ExtResource("4_4n7jt")]
+subject = NodePath("..")
+
+[node name="Trike" parent="." instance=ExtResource("3_7pfvq")]
+transform = Transform3D(-0.996865, 0, -0.0791202, 0, 1, 0, 0.0791202, 0, -0.996865, 491.082, 1.42205, -511.934)
+
+[node name="DestinationPost" parent="." node_paths=PackedStringArray("npc") instance=ExtResource("8_db6ch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 620.004, 1.29717, -514.827)
+npc = NodePath("../NPC")
+
 [node name="NPC" parent="." instance=ExtResource("5_nojq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 454.337, 2.2567, -512.973)
-
-[node name="NPC2" parent="." instance=ExtResource("5_nojq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 454.219, 2.2567, -509.251)
-
-[connection signal="body_entered" from="Player2/TargetDetect" to="Player2/CameraTarget" method="_on_target_detect_body_entered"]
-[connection signal="body_exited" from="Player2/TargetDetect" to="Player2/CameraTarget" method="_on_target_detect_body_exited"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 473, 2, -510)
