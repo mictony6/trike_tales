@@ -1,11 +1,17 @@
 ~ this_is_a_node_title
-Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
-Nathan: Here are some choices.
-- First one
-	Nathan: You picked the first one.
-- Second one
-	Nathan: You picked the second one.
-- Start again => this_is_a_node_title
-- End the conversation => END
-Nathan: For more information see the online documentation.
+Nathan: [[Hi|Hello|Nong]], can you take me to Capisay please.
+~ decide
+Nathan: I'm so late.
+- Sure.
+	Nathan: Thank you! I'll get on now. 
+	do Globals.take_passenger() 
+	=> END
+- Sorry, I can't.
+	Nathan: Oh, ok :( => END
+- Where? =>  clarify_destination
+- ... => confused
+~ confused
+Nathan: ... => END
+~ clarify_destination
+Nathan: To Capisay! => decide
 => END

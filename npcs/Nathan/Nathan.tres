@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCDetails" load_steps=5 format=3 uid="uid://dl3wcpugaeeb0"]
+
+[ext_resource type="Resource" uid="uid://5756f0djklk3" path="res://npcs/Common/CommonDialogue.dialogue" id="1_wfh4g"]
+[ext_resource type="Script" path="res://scripts/resources/npc_details.gd" id="2_03flu"]
+[ext_resource type="Script" path="res://scripts/resources/quest.gd" id="2_cyfph"]
+[ext_resource type="Resource" uid="uid://braetjxq0vynr" path="res://npcs/Nathan/quests/ToTheBeach.tres" id="3_0vkl5"]
+
+[resource]
+resource_name = "Krztian NPC Details"
+script = ExtResource("2_03flu")
+name = "Krztian"
+quests = Array[ExtResource("2_cyfph")]([ExtResource("3_0vkl5")])
+default_dialogue = ExtResource("1_wfh4g")

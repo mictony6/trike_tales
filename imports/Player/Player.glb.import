@@ -34,7 +34,7 @@ import_script/path=""
 _subresources={
 "animations": {
 "climb_right": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/climb_right.res",
 "settings/loop_mode": 0,
@@ -7230,10 +7230,10 @@ _subresources={
 "slices/amount": 0
 },
 "idle": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/idle.res",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -9032,7 +9032,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/idle_loop_baked.res",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -10828,7 +10828,7 @@ _subresources={
 "slices/amount": 0
 },
 "interact": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/interact.res",
 "settings/loop_mode": 0,
@@ -14426,7 +14426,7 @@ _subresources={
 "slices/amount": 0
 },
 "jump": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/jump.res",
 "settings/loop_mode": 0,
@@ -18024,7 +18024,7 @@ _subresources={
 "slices/amount": 0
 },
 "sprint": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/sprint.res",
 "settings/loop_mode": 0,
@@ -23424,7 +23424,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/sprint_loop_baked.res",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -25220,7 +25220,7 @@ _subresources={
 "slices/amount": 0
 },
 "walk": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/walk.res",
 "settings/loop_mode": 0,
@@ -27022,7 +27022,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "res://imports/Player/animations/walk_loop_baked.res",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -28816,6 +28816,23 @@ _subresources={
 "slice_99/save_to_file/path": "",
 "slice_99/start_frame": 0,
 "slices/amount": 0
+}
+},
+"materials": {
+"Player": {
+"use_external/enabled": true,
+"use_external/path": "res://materials/Player.tres"
+}
+},
+"meshes": {
+"Player_Cube": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://mesh/Player_Cube.res"
 }
 }
 }

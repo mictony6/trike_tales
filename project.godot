@@ -22,12 +22,13 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [editor]
 
+movie_writer/movie_file="D:/Documents/Godot_Projects/trike_tales/movies/movie.avi"
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/gd-blender-3d-shortcuts/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [input]
 
@@ -89,7 +90,7 @@ exit={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/EasyPassenger01.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/EasyPassenger01.dialogue", "res://npcs/Nathan/NathanDialouge.dialogue", "res://npcs/Common/CommonDialogue.dialogue")
 
 [layer_names]
 
@@ -107,4 +108,5 @@ locale/translations_pot_files=PackedStringArray("res://dialogue/EasyPassenger01.
 
 [rendering]
 
+textures/default_filters/anisotropic_filtering_level=3
 occlusion_culling/use_occlusion_culling=true

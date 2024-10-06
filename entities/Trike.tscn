@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://clxc7ikwiatiy"]
+[gd_scene load_steps=21 format=3 uid="uid://clxc7ikwiatiy"]
 
 [ext_resource type="Script" path="res://scripts/trike/trike.gd" id="1_1yqg8"]
 [ext_resource type="PackedScene" uid="uid://deb5t8xjwasfy" path="res://imports/Trike/TRIKE.glb" id="2_iffh3"]
+[ext_resource type="Script" path="res://scripts/resources/seat.gd" id="2_qa3hw"]
 [ext_resource type="ArrayMesh" uid="uid://deg2pgjibwj3l" path="res://mesh/wheel.res" id="2_r88yf"]
 [ext_resource type="Texture2D" uid="uid://baba13jymqbdm" path="res://ui/keyboard_e_outline.png" id="4_eofh5"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_pigpw"]
@@ -57,7 +58,7 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[node name="Trike" type="VehicleBody3D" node_paths=PackedStringArray("control_ui") groups=["Vehicle"]]
+[node name="Trike" type="VehicleBody3D" node_paths=PackedStringArray("control_ui", "seats") groups=["Vehicle"]]
 collision_layer = 4
 collision_mask = 9
 mass = 1000.0
@@ -67,6 +68,7 @@ center_of_mass = Vector3(0, 0.1, 0.1)
 script = ExtResource("1_1yqg8")
 control_ui = NodePath("ControlUI")
 max_torque = 4000
+seats = [NodePath("Seats/Seat1"), NodePath("Seats/Seat2")]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00446327, 1.05194, 0.0915766)
@@ -96,6 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.151, 0.36, 1.07)
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.4
+wheel_friction_slip = 5.225
 suspension_stiffness = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFrontLeft"]
@@ -107,6 +110,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.151, 0.36, 1.07)
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.4
+wheel_friction_slip = 5.225
 suspension_stiffness = 50.0
 
 [node name="WheelBackLeft" type="VehicleWheel3D" parent="."]
@@ -207,9 +211,20 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.6164
 [node name="CameraTarget" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29905, 0)
 
+[node name="Seats" type="Node3D" parent="."]
+
+[node name="Seat1" type="Node3D" parent="Seats"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.144865, 2.65107, -0.304319)
+script = ExtResource("2_qa3hw")
+
+[node name="Seat2" type="Node3D" parent="Seats"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.632135, 2.65107, -0.304319)
+script = ExtResource("2_qa3hw")
+
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
 [connection signal="state_processing" from="StateChart/CompoundState/Vacant" to="." method="_on_vacant_state_processing"]
+[connection signal="state_entered" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_physics_processing"]
 [connection signal="state_processing" from="StateChart/CompoundState/Driving" to="." method="_on_driving_state_processing"]
 

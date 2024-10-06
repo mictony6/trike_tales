@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dtsxnn02yq3bu"]
+[gd_scene load_steps=34 format=3 uid="uid://dtsxnn02yq3bu"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_gwt2r"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_ktoio"]
@@ -24,11 +24,27 @@ height = 1.64567
 
 [sub_resource type="Resource" id="Resource_c0lfh"]
 script = ExtResource("10_0yp4e")
-state = NodePath("../Jump")
+state = NodePath("../../Jump")
 
 [sub_resource type="Resource" id="Resource_iq63u"]
 script = ExtResource("11_alybe")
 guard = SubResource("Resource_c0lfh")
+
+[sub_resource type="Resource" id="Resource_k33xv"]
+script = ExtResource("10_0yp4e")
+state = NodePath("../../Interaction/CanConverse")
+
+[sub_resource type="Resource" id="Resource_5hilu"]
+script = ExtResource("11_alybe")
+guard = SubResource("Resource_k33xv")
+
+[sub_resource type="Resource" id="Resource_xrq6k"]
+script = ExtResource("10_0yp4e")
+state = NodePath("../../CanDrive")
+
+[sub_resource type="Resource" id="Resource_x84gw"]
+script = ExtResource("11_alybe")
+guard = SubResource("Resource_xrq6k")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cwnvv"]
 radius = 0.249497
@@ -81,7 +97,6 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_kqb0i"]
-graph_offset = Vector2(-487.188, -59.3851)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_jnuos")
 nodes/Animation/position = Vector2(-120, -180)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_eu8ur")
@@ -107,77 +122,78 @@ collision_mask = 9
 floor_max_angle = 1.0472
 script = ExtResource("1_gwt2r")
 
-[node name="InteractionManager" type="Node3D" parent="." index="0"]
+[node name="InteractionManager" type="Node3D" parent="." index="0" node_paths=PackedStringArray("statechart")]
 script = ExtResource("3_pcfnj")
+statechart = NodePath("../StateChart")
 
 [node name="Armature" parent="." index="1"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/position = Vector3(-1.68685e-15, 0.76088, -0.0381256)
+bones/0/position = Vector3(0.0198741, 0.757287, 0.0103143)
 bones/0/rotation = Quaternion(0.160989, 1.17952e-07, 1.924e-08, 0.986956)
 bones/1/rotation = Quaternion(-0.0538832, 1.2263e-10, -1.28859e-08, 0.998547)
-bones/2/rotation = Quaternion(-0.194996, 0.00818755, 0.00141474, 0.980769)
-bones/3/rotation = Quaternion(-0.00619509, 0.0233901, 0.00273512, 0.999704)
-bones/4/rotation = Quaternion(0.493203, -0.0149284, 0.00526503, 0.869771)
-bones/5/rotation = Quaternion(-0.222539, 1.25407e-07, 5.50072e-09, 0.974924)
+bones/2/rotation = Quaternion(-0.182586, -1.17208e-07, -2.19206e-08, 0.98319)
+bones/3/rotation = Quaternion(0.00645066, 7.44466e-16, 5.42964e-12, 0.999979)
+bones/4/rotation = Quaternion(0.482207, -2.81907e-11, 3.91689e-10, 0.876058)
+bones/5/rotation = Quaternion(-0.222541, 1.15844e-07, -2.66167e-08, 0.974923)
 bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(-0.195412, -0.0155624, 0.00289666, 0.980593)
-bones/7/rotation = Quaternion(-0.576604, -0.312141, -0.365327, 0.660781)
-bones/8/rotation = Quaternion(-0.516262, 0.472241, -0.158208, 0.69673)
+bones/6/rotation = Quaternion(-0.207844, -1.16241e-07, -2.48563e-08, 0.978162)
+bones/7/rotation = Quaternion(-0.579904, -0.313962, -0.363758, 0.65789)
+bones/8/rotation = Quaternion(-0.516929, 0.468541, -0.234365, 0.676998)
 bones/8/scale = Vector3(1, 1, 1)
-bones/9/position = Vector3(-1.95121e-08, 0.0970115, -1.39593e-08)
-bones/9/rotation = Quaternion(3.60099e-08, 0.0688255, 3.33084e-07, 0.997629)
-bones/10/position = Vector3(6.83677e-08, 0.0970114, 3.27273e-08)
-bones/10/rotation = Quaternion(0.134381, 0.0688292, -0.266093, 0.95205)
-bones/11/position = Vector3(-1.55751e-08, 0.10908, 2.57433e-08)
-bones/11/rotation = Quaternion(-1.10116e-08, 0.149708, -2.02616e-08, 0.98873)
-bones/12/position = Vector3(-9.64339e-09, 0.10908, 1.82615e-09)
-bones/12/rotation = Quaternion(-0.10091, 0.149136, -0.00748351, 0.983626)
+bones/9/position = Vector3(-4.47005e-08, 0.0978923, 9.31387e-09)
+bones/9/rotation = Quaternion(-3.63951e-08, 0.138941, 1.4583e-07, 0.990301)
+bones/10/position = Vector3(2.0459e-08, 0.0978922, -6.37816e-09)
+bones/10/rotation = Quaternion(0.172302, 0.138933, -0.256244, 0.940929)
+bones/11/position = Vector3(3.79488e-09, 0.109988, 2.88093e-08)
+bones/11/rotation = Quaternion(1.41516e-08, -0.113716, 1.48013e-07, 0.993513)
+bones/12/position = Vector3(-2.11479e-10, 0.109988, 1.66033e-08)
+bones/12/rotation = Quaternion(-0.0546926, -0.115117, 0.0467794, 0.990741)
 bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(-0.578711, 0.313306, 0.364328, 0.658937)
-bones/14/rotation = Quaternion(-0.508595, -0.469826, 0.219533, 0.687314)
+bones/13/rotation = Quaternion(-0.579904, 0.313962, 0.363758, 0.65789)
+bones/14/rotation = Quaternion(-0.519213, -0.464264, 0.284466, 0.658753)
 bones/14/scale = Vector3(1, 1, 1)
-bones/15/position = Vector3(4.19039e-08, 0.0957335, -1.31584e-08)
-bones/15/rotation = Quaternion(-5.23421e-08, -0.0847579, 7.98741e-08, 0.996402)
-bones/16/position = Vector3(-3.11574e-08, 0.0957335, -4.25544e-11)
-bones/16/rotation = Quaternion(0.214464, -0.0847799, 0.324606, 0.917305)
-bones/17/position = Vector3(1.94975e-08, 0.107864, 5.54349e-09)
-bones/17/rotation = Quaternion(-7.39843e-08, 0.00678387, -6.40495e-08, 0.999977)
-bones/18/position = Vector3(3.53106e-08, 0.107865, 9.05849e-08)
-bones/18/rotation = Quaternion(0.00448419, 0.0073695, 0.0555598, 0.998418)
+bones/15/position = Vector3(-3.91281e-08, 0.0976939, 1.11788e-08)
+bones/15/rotation = Quaternion(-5.57504e-08, -0.0924855, -1.60305e-07, 0.995714)
+bones/16/position = Vector3(-8.39488e-08, 0.0976937, -7.77432e-09)
+bones/16/rotation = Quaternion(0.163972, -0.0924867, 0.154574, 0.969879)
+bones/17/position = Vector3(5.41532e-08, 0.109736, 4.57558e-08)
+bones/17/rotation = Quaternion(-6.18004e-08, 0.0509301, 1.69305e-08, 0.998702)
+bones/18/position = Vector3(-3.19451e-08, 0.109736, 5.11978e-09)
+bones/18/rotation = Quaternion(-0.0503009, 0.0509919, 0.00972776, 0.997384)
 bones/18/scale = Vector3(1, 1, 1)
-bones/19/rotation = Quaternion(-8.37082e-08, 0.656385, 0.754426, -1.81131e-08)
-bones/20/rotation = Quaternion(3.11396e-08, 0.656385, 0.754426, 7.9358e-08)
-bones/22/rotation = Quaternion(-0.451577, -0.607291, 0.647699, -0.0880967)
+bones/19/rotation = Quaternion(-2.85405e-08, 0.656385, 0.754426, -8.22172e-08)
+bones/20/rotation = Quaternion(8.52865e-08, 0.656385, 0.754426, 1.68175e-08)
+bones/22/rotation = Quaternion(-0.443878, -0.429534, 0.785317, 0.0418376)
 bones/22/scale = Vector3(1, 1, 1)
-bones/23/position = Vector3(6.97433e-09, 0.194086, 1.72226e-08)
-bones/23/rotation = Quaternion(-2.1147e-09, -0.00302069, 2.35144e-08, 0.999995)
-bones/24/position = Vector3(3.61731e-09, 0.194086, 1.0645e-08)
-bones/24/rotation = Quaternion(0.407214, -0.00408917, 0.00182371, 0.913322)
-bones/25/position = Vector3(1.96446e-10, 0.180525, -6.7458e-09)
-bones/25/rotation = Quaternion(9.58657e-09, 0.0129509, 3.55135e-08, 0.999916)
-bones/26/position = Vector3(4.41788e-09, 0.180525, 7.74313e-09)
-bones/26/rotation = Quaternion(-0.586757, 0.110225, -0.005087, 0.80221)
+bones/23/position = Vector3(-3.15326e-10, 0.200569, 4.44756e-09)
+bones/23/rotation = Quaternion(3.49249e-10, -6.11195e-10, 4.29573e-08, 1)
+bones/24/position = Vector3(6.94657e-09, 0.200569, -2.90799e-09)
+bones/24/rotation = Quaternion(0.0084397, -0.000249424, 2.04565e-06, 0.999964)
+bones/25/position = Vector3(-9.71429e-10, 0.187032, 7.66268e-10)
+bones/25/rotation = Quaternion(-5.52391e-09, 0.00175407, 1.25209e-08, 0.999998)
+bones/26/position = Vector3(-7.04316e-10, 0.187032, 4.44592e-09)
+bones/26/rotation = Quaternion(-0.630222, 0.0978157, 0.0622765, 0.767707)
 bones/26/scale = Vector3(1, 1, 1)
-bones/27/position = Vector3(1.02286e-09, 0.072908, 2.83153e-08)
-bones/27/rotation = Quaternion(-1.55416e-05, 0.992101, -0.125438, 1.1519e-06)
+bones/27/position = Vector3(8.91223e-09, 0.0729137, -1.4751e-08)
+bones/27/rotation = Quaternion(1.5248e-07, 0.992011, -0.126154, -8.50179e-07)
 bones/28/rotation = Quaternion(-0.174379, 0.780098, 0.32054, 0.508226)
 bones/28/scale = Vector3(1, 1, 1)
-bones/29/rotation = Quaternion(0.445884, -0.450678, 0.772838, -0.0282669)
+bones/29/rotation = Quaternion(0.432609, -0.445193, 0.781822, -0.0583713)
 bones/29/scale = Vector3(1, 1, 1)
-bones/30/position = Vector3(-1.22154e-08, 0.1966, -4.92027e-09)
-bones/30/rotation = Quaternion(2.72635e-09, 0.000271397, -3.74757e-09, 1)
-bones/31/position = Vector3(-7.70821e-09, 0.1966, -5.96707e-10)
-bones/31/rotation = Quaternion(0.0871013, 0.000530793, -4.56753e-05, 0.996199)
+bones/30/position = Vector3(4.9911e-09, 0.200569, 1.8656e-09)
+bones/30/rotation = Quaternion(5.78584e-08, -4.55693e-08, -4.86616e-08, 1)
+bones/31/position = Vector3(6.33451e-09, 0.200569, 1.31084e-08)
+bones/31/rotation = Quaternion(0.0084398, -0.000259662, 2.23942e-06, 0.999964)
 bones/31/scale = Vector3(1, 1, 1)
-bones/32/position = Vector3(-6.04083e-09, 0.183059, 5.48271e-09)
-bones/32/rotation = Quaternion(4.52046e-08, -0.00701766, -8.03457e-09, 0.999975)
-bones/33/position = Vector3(-5.18283e-09, 0.183059, 7.94401e-10)
-bones/33/rotation = Quaternion(-0.622759, -0.10211, -0.0470103, 0.774296)
+bones/32/position = Vector3(-5.71005e-09, 0.187032, 8.3295e-09)
+bones/32/rotation = Quaternion(2.79008e-08, 0.00598994, -1.66666e-08, 0.999982)
+bones/33/position = Vector3(-1.12001e-08, 0.187032, -5.18409e-09)
+bones/33/rotation = Quaternion(-0.627169, -0.0888162, -0.0877773, 0.768808)
 bones/33/scale = Vector3(1, 1, 1)
-bones/34/position = Vector3(-6.08609e-09, 0.0728509, 2.48515e-09)
-bones/34/rotation = Quaternion(2.44563e-05, 0.992143, -0.125112, -2.24737e-06)
+bones/34/position = Vector3(-6.72215e-09, 0.0729137, 5.67758e-09)
+bones/34/rotation = Quaternion(6.58025e-06, 0.991918, -0.126881, 1.84684e-08)
 bones/34/scale = Vector3(1, 1, 1)
 
 [node name="Player" parent="Armature/Skeleton3D" index="0"]
@@ -221,6 +237,13 @@ to = NodePath("../../Jump")
 event = &"jump"
 delay_in_seconds = "0.0"
 
+[node name="ToInDialogue" type="Node" parent="StateChart/Root/Movement/Idle" index="2"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../InDialogue")
+event = &"in_dialogue"
+guard = SubResource("Resource_iq63u")
+delay_in_seconds = "0.0"
+
 [node name="Walk" type="Node" parent="StateChart/Root/Movement" index="1"]
 script = ExtResource("4_0u3os")
 
@@ -240,6 +263,13 @@ delay_in_seconds = "0.0"
 script = ExtResource("10_oq8ui")
 to = NodePath("../../Idle")
 event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="ToInDialogue" type="Node" parent="StateChart/Root/Movement/Walk" index="3"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../InDialogue")
+event = &"in_dialogue"
+guard = SubResource("Resource_iq63u")
 delay_in_seconds = "0.0"
 
 [node name="Jump" type="Node" parent="StateChart/Root/Movement" index="2"]
@@ -272,6 +302,13 @@ to = NodePath("../../Idle")
 event = &"idle"
 delay_in_seconds = "0.0"
 
+[node name="ToInDialogue" type="Node" parent="StateChart/Root/Movement/Sprint" index="3"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../../InDialogue")
+event = &"in_dialogue"
+guard = SubResource("Resource_iq63u")
+delay_in_seconds = "0.0"
+
 [node name="Driving" type="Node" parent="StateChart/Root/Movement" index="4"]
 script = ExtResource("4_0u3os")
 
@@ -289,6 +326,7 @@ default_state = NodePath("../Idle")
 script = ExtResource("10_oq8ui")
 to = NodePath("../Driving")
 event = &"driving"
+guard = SubResource("Resource_5hilu")
 delay_in_seconds = "0.0"
 
 [node name="InDialogue" type="Node" parent="StateChart/Root/Movement" index="7"]
@@ -300,42 +338,36 @@ to = NodePath("../../HistoryState")
 event = &"last_state"
 delay_in_seconds = "0.0"
 
-[node name="ToInDialogue" type="Node" parent="StateChart/Root/Movement" index="8"]
-script = ExtResource("10_oq8ui")
-to = NodePath("../InDialogue")
-event = &"in_dialogue"
-guard = SubResource("Resource_iq63u")
-delay_in_seconds = "0.0"
-
 [node name="Interaction" type="Node" parent="StateChart/Root" index="1"]
 script = ExtResource("3_dvcf3")
 initial_state = NodePath("Default")
 
-[node name="Default" type="Node" parent="StateChart/Root/Interaction" index="0"]
+[node name="ToDefault" type="Node" parent="StateChart/Root/Interaction" index="0"]
+script = ExtResource("10_oq8ui")
+to = NodePath("../Default")
+event = &"default"
+delay_in_seconds = "0.0"
+
+[node name="Default" type="Node" parent="StateChart/Root/Interaction" index="1"]
 script = ExtResource("4_0u3os")
 
 [node name="ToCanConverse" type="Node" parent="StateChart/Root/Interaction/Default" index="0"]
 script = ExtResource("10_oq8ui")
 to = NodePath("../../CanConverse")
 event = &"can_converse"
+guard = SubResource("Resource_x84gw")
 delay_in_seconds = "0.0"
 
-[node name="CanConverse" type="Node" parent="StateChart/Root/Interaction" index="1"]
+[node name="CanConverse" type="Node" parent="StateChart/Root/Interaction" index="2"]
 script = ExtResource("4_0u3os")
 
-[node name="ToConversing" type="Node" parent="StateChart/Root/Interaction/CanConverse" index="0"]
-script = ExtResource("10_oq8ui")
-to = NodePath("../../Conversing")
-event = &"conversing"
-delay_in_seconds = "0.0"
-
-[node name="Conversing" type="Node" parent="StateChart/Root/Interaction" index="2"]
+[node name="CanDrive" type="Node" parent="StateChart/Root/Interaction" index="3"]
 script = ExtResource("4_0u3os")
 
-[node name="ToDefault" type="Node" parent="StateChart/Root/Interaction" index="3"]
+[node name="ToCanDrive" type="Node" parent="StateChart/Root/Interaction" index="4"]
 script = ExtResource("10_oq8ui")
-to = NodePath("../Default")
-event = &"default"
+to = NodePath("../CanDrive")
+event = &"can_drive"
 delay_in_seconds = "0.0"
 
 [node name="Terrain" type="Node" parent="StateChart/Root" index="2"]
@@ -378,9 +410,9 @@ parameters/OneShot/active = false
 parameters/OneShot/internal_active = false
 parameters/OneShot/request = 0
 parameters/TimeScale/scale = 1.5
-parameters/Transition/current_state = "walk"
+parameters/Transition/current_state = "idle"
 parameters/Transition/transition_request = ""
-parameters/Transition/current_index = 0
+parameters/Transition/current_index = 2
 script = ExtResource("7_i53gn")
 
 [node name="Control" type="Control" parent="." index="8"]
@@ -407,11 +439,16 @@ initial_node_to_watch = NodePath("../../StateChart")
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Jump" to="." method="_on_jump_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Sprint" to="AnimationTree" method="_on_sprint_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Sprint" to="." method="_on_sprint_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Driving" to="." method="_on_driving_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Driving" to="AnimationTree" method="_on_driving_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Movement/Driving" to="." method="_on_driving_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Driving" to="." method="_on_driving_state_physics_processing"]
+[connection signal="state_unhandled_input" from="StateChart/Root/Movement/Driving" to="." method="_on_driving_state_unhandled_input"]
 [connection signal="state_entered" from="StateChart/Root/Movement/InDialogue" to="InteractionManager" method="_on_in_dialogue_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Movement/InDialogue" to="AnimationTree" method="_on_in_dialogue_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Movement/InDialogue" to="InteractionManager" method="_on_in_dialogue_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/InDialogue" to="." method="_on_in_dialogue_state_physics_processing"]
+[connection signal="state_unhandled_input" from="StateChart/Root/Interaction/CanConverse" to="InteractionManager" method="_on_can_converse_state_unhandled_input"]
+[connection signal="state_unhandled_input" from="StateChart/Root/Interaction/CanDrive" to="InteractionManager" method="_on_can_drive_state_unhandled_input"]
 [connection signal="body_entered" from="TerrainChecker" to="TerrainChecker" method="_on_body_entered"]
 [connection signal="body_exited" from="TerrainChecker" to="TerrainChecker" method="_on_body_exited"]

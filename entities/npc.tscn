@@ -1,11 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://g1nrbjc3o0xq"]
+[gd_scene load_steps=14 format=3 uid="uid://g1nrbjc3o0xq"]
 
 [ext_resource type="Script" path="res://scripts/npc_behavior.gd" id="1_np2hg"]
-[ext_resource type="Resource" uid="uid://yy6f6cppqoei" path="res://dialogue/EasyPassenger01.dialogue" id="2_0lxdx"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/selector.gd" id="2_fcv6i"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/sequence.gd" id="2_rlpr8"]
 [ext_resource type="Script" path="res://scripts/bt/Nodes/leaf.gd" id="3_5cl3d"]
-[ext_resource type="Script" path="res://scripts/npc_black_board.gd" id="5_y4t8g"]
+[ext_resource type="Script" path="res://scripts/ui/bubble_indicator.gd" id="7_1kw17"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_2e4da"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5tf3"]
 albedo_color = Color(0.853594, 0.48995, 0.435363, 1)
@@ -27,13 +29,32 @@ height = 1.56
 radius = 0.25
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5nick"]
-radius = 10.0
+radius = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vjmny"]
+bg_color = Color(0.847887, 0.390529, 0.195295, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+
+[sub_resource type="SystemFont" id="SystemFont_8ina2"]
+font_names = PackedStringArray("Verdana")
+subpixel_positioning = 0
+oversampling = 4.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_i5xk5"]
+font = SubResource("SystemFont_8ina2")
+font_size = 24
 
 [node name="NPC" type="CharacterBody3D" node_paths=PackedStringArray("behavior_tree")]
 collision_layer = 8
+collision_mask = 5
 script = ExtResource("1_np2hg")
 behavior_tree = NodePath("Selector")
-dialogue = ExtResource("2_0lxdx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.39043, -0.369728)
+mesh = SubResource("PrismMesh_2e4da")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -53,28 +74,75 @@ script = ExtResource("2_rlpr8")
 [node name="IsNotNearTrike" type="Node" parent="Selector/SeqWaitForTrike"]
 script = ExtResource("3_5cl3d")
 
-[node name="SeqSignalTrike" type="Node" parent="Selector"]
+[node name="Idle" type="Node" parent="Selector/SeqWaitForTrike"]
+script = ExtResource("3_5cl3d")
+
+[node name="SeqGiveQuest" type="Node" parent="Selector"]
 script = ExtResource("2_rlpr8")
 
-[node name="Jump" type="Node" parent="Selector/SeqSignalTrike"]
+[node name="HasQuest" type="Node" parent="Selector/SeqGiveQuest"]
 script = ExtResource("3_5cl3d")
 
-[node name="Land" type="Node" parent="Selector/SeqSignalTrike"]
+[node name="SeqSignalTrike" type="Node" parent="Selector/SeqGiveQuest"]
+script = ExtResource("2_rlpr8")
+
+[node name="IsPlayerNear" type="Node" parent="Selector/SeqGiveQuest/SeqSignalTrike"]
 script = ExtResource("3_5cl3d")
 
-[node name="BlackBoard" type="Node" parent="."]
-script = ExtResource("5_y4t8g")
+[node name="Jump" type="Node" parent="Selector/SeqGiveQuest/SeqSignalTrike"]
+script = ExtResource("3_5cl3d")
 
-[node name="TrikeDetector" type="Area3D" parent="."]
+[node name="Land" type="Node" parent="Selector/SeqGiveQuest/SeqSignalTrike"]
+script = ExtResource("3_5cl3d")
+
+[node name="Detector" type="Area3D" parent="."]
 collision_layer = 32
-collision_mask = 4
+collision_mask = 6
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrikeDetector"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector"]
 shape = SubResource("SphereShape3D_5nick")
 
+[node name="Bubble Indicator" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("7_1kw17")
+
+[node name="Quest" type="Control" parent="Bubble Indicator"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Bubble Indicator/Quest"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -41.0
+offset_right = 40.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vjmny")
+
+[node name="Label" type="Label" parent="Bubble Indicator/Quest/Panel"]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 40.0
+offset_bottom = 35.0
+text = "!"
+label_settings = SubResource("LabelSettings_i5xk5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="on_run" from="Selector/SeqWaitForTrike/IsNotNearTrike" to="." method="_on_is_not_near_trike_on_run"]
-[connection signal="on_run" from="Selector/SeqSignalTrike/Jump" to="." method="_on_jump_on_run"]
-[connection signal="on_run" from="Selector/SeqSignalTrike/Land" to="." method="_on_land_on_run"]
-[connection signal="body_entered" from="TrikeDetector" to="BlackBoard" method="_on_trike_detector_body_entered"]
-[connection signal="body_exited" from="TrikeDetector" to="BlackBoard" method="_on_trike_detector_body_exited"]
+[connection signal="on_run" from="Selector/SeqWaitForTrike/Idle" to="." method="_on_idle_on_run"]
+[connection signal="on_run" from="Selector/SeqGiveQuest/HasQuest" to="." method="_on_has_quest_on_run"]
+[connection signal="on_run" from="Selector/SeqGiveQuest/SeqSignalTrike/IsPlayerNear" to="." method="_on_is_player_near_on_run"]
+[connection signal="on_run" from="Selector/SeqGiveQuest/SeqSignalTrike/Jump" to="." method="_on_jump_on_run"]
+[connection signal="on_run" from="Selector/SeqGiveQuest/SeqSignalTrike/Land" to="." method="_on_land_on_run"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]

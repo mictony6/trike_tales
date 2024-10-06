@@ -3,11 +3,11 @@ extends Node
 class_name Task
 
 enum {
-    FRESH,
-    RUNNING,
-    FAILED,
-    SUCCEDED,
-    CANCELLED
+	FRESH,
+	RUNNING,
+	FAILED,
+	SUCCEDED,
+	CANCELLED
 }
 
 var control: Task = null
@@ -18,47 +18,47 @@ var is_entry = false
 
 # self 
 func running():
-    status = RUNNING
-    if control:
-        control.child_running()
+	status = RUNNING
+	if control:
+		control.child_running()
 
 
 func success():
-    status = SUCCEDED
-    if control:
-        control.child_success()
+	status = SUCCEDED
+	if control:
+		control.child_success()
 
 func fail():
-    status = FAILED
-    if control:
-        control.child_fail()
+	status = FAILED
+	if control:
+		control.child_fail()
 
 func cancel():
-    status = CANCELLED
-    if control:
-        control.child_cancel()
+	status = CANCELLED
+	if control:
+		control.child_cancel()
 
 func run():
-    pass
+	pass
 
 #children 
 func child_success():
-    pass
+	pass
 
 func child_fail():
-    pass
+	pass
 
 func child_running():
-    pass
+	pass
 
 func start():
-    status = FRESH
-    for child in get_children():
-        var _child: Task = child
-        _child.control = self
-        _child.tree = self.tree
-        _child.start()
+	status = FRESH
+	for child in get_children():
+		var _child: Task = child
+		_child.control = self
+		_child.tree = self.tree
+		_child.start()
 
 func reset():
-    cancel()
-    status = FRESH
+	cancel()
+	status = FRESH

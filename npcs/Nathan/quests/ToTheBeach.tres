@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=4 format=3 uid="uid://braetjxq0vynr"]
+
+[ext_resource type="Script" path="res://scripts/resources/quest.gd" id="1_0qrjl"]
+[ext_resource type="Resource" uid="uid://74s7gc7uf24e" path="res://npcs/Nathan/NathanDialouge.dialogue" id="1_ll1sj"]
+
+[sub_resource type="Resource" id="Resource_y4ctf"]
+script = ExtResource("1_0qrjl")
+title = "Take Krztian to the beach"
+description = ""
+status = 0
+objectives = Array[ExtResource("1_0qrjl")]([])
+
+[resource]
+script = ExtResource("1_0qrjl")
+title = "To The Beach"
+description = "A fine young man wants to go to the beach."
+status = 2
+objectives = Array[ExtResource("1_0qrjl")]([SubResource("Resource_y4ctf")])
+dialogue = ExtResource("1_ll1sj")

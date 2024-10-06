@@ -1,0 +1,26 @@
+~ start
+if Globals.trike.available_seats <= 0:
+	Krztian: Oof, sorry you already seem pretty occupied. => END
+Krztian: [[Hey man|Yo|Hello]], can you take the beach?
+~ decide
+Krztian: I'm so late.
+- Sure.
+	Krztian: Thank you! I'll get on now. 
+	do Globals.take_passenger() 
+	=> END
+- Sorry, I can't.
+	Krztian: Oh, ok :( => END
+- Where? =>  clarify_destination
+- ... => confused
+~ confused
+Krztian: ... => END
+~ clarify_destination
+Krztian: To the beach! => decide
+
+
+~ on_arrived
+Krztian: I'm actually pretty new here.
+Krztian: ...
+Krztian: I lied. I'm actually just visiting.
+Krztian: My father...the mayor... you fel like he's up to something?
+=> END

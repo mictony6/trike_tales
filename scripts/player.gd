@@ -3,6 +3,7 @@ class_name Player
 
 @onready var pivot: Pivot = $Pivot
 @onready var state_chart: StateChart = $StateChart
+@onready var interaction_manager: InteractionManager = $InteractionManager
 
 @onready var body_collider = $Collider
 const MOUSE_SENSITIVITY = 0.005
@@ -89,17 +90,32 @@ func _on_jump_state_entered() -> void:
 
 var mount_position: Node3D = null
 
-func enter_vehicle(target_pos: Node3D, vehicle_rotation_y: float, camera_target: Node3D) -> void:
-	body_collider.disabled = true
-	mount_position = target_pos
-	# move player to target position
-	global_position = target_pos.global_position
-	# rotate player to the vehicle direction
-	rotation.y = vehicle_rotation_y
+func try_enter_vehicle() -> void:
 	state_chart.send_event("driving")
+
+func exit_vehicle():
+	state_chart.send_event("last_state")
+
+func _on_driving_state_entered() -> void:
+	var target_pos: Node3D = Globals.trike.player_target
+	var vehicle_rotation_y: float = Globals.trike.rotation_degrees.y
+	var camera_target: Node3D = Globals.trike.camera_target
+
+	turn_on_vehicle()
+
+	body_collider.disabled = true
+	#mount position is offset to which the player must stand for the 
+	# mount animation to look correctly
+	mount_position = target_pos
+	global_position = target_pos.global_position
+	
+	# rotate player to the vehicle's forward direction
+	rotation.y = vehicle_rotation_y
+
+	
+	# change camera to look at verhicle
 	pivot.enter_vehicle(camera_target)
 	pivot.set_length_to_driving()
-
 
 func _on_driving_state_physics_processing(delta: float) -> void:
 	velocity = Vector3.ZERO
@@ -108,20 +124,34 @@ func _on_driving_state_physics_processing(delta: float) -> void:
 	global_position = mount_position.global_position
 	# rotate player to the vehicle direction
 	rotation = mount_position.global_rotation
-
-func exit_vehicle():
+	
+func _on_driving_state_exited() -> void:
 	body_collider.disabled = false
-	state_chart.send_event("last_state")
 	rotation_degrees.x = 0
 	rotation_degrees.z = 0
+
+	Globals.trike.uncontrol()
 	pivot.exit_vehicle()
 	pivot.set_length_to_normal()
 
 
 func _on_in_dialogue_state_physics_processing(delta: float) -> void:
 	velocity = Vector3.ZERO
-	var interact_location : Vector3 = state_chart.get_expression_property("interact_location")
-	var direction_to_npc : Vector3 = (interact_location-global_position).normalized()
+	var interact_location: Vector3 = state_chart.get_expression_property("interact_location")
+	var direction_to_npc: Vector3 = (interact_location - global_position).normalized()
 	var target_angle: float = atan2(-direction_to_npc.x, -direction_to_npc.z)
 	rotation.y = lerp_angle(rotation.y, target_angle, delta * 10)
 	#look_at(state_chart.get_expression_property("interact_location"), Vector3.UP)
+
+
+func get_npc_in_dialogue() -> NPCInstance:
+	return interaction_manager.current_npc
+
+func turn_on_vehicle():
+	Globals.trike.control()
+
+
+func _on_driving_state_unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("exit"):
+		print("exit vehicle")
+		exit_vehicle()
